@@ -1,0 +1,88 @@
+   <%layout("layout/navbar.ejs")%>
+    <title>Medlink</title>
+
+<link rel="stylesheet" href="main.css">
+  
+
+
+<body>
+
+  <!--Search Box-->
+
+ 
+
+
+   
+   <section id="home" class="active">
+    <div style="text-align:center; padding:40px 20px; background:#e0f7fa; border-radius:10px;">
+      <h1 style="color:#007c8a; font-size:2.2rem;">Your Health, Our Priority</h1>
+      <p style="font-size:1.1rem; max-width:600px; margin:10px auto;">
+        Book appointments, consult top doctors, and take charge of your health — all in one place.
+      </p>
+      <img src="https://cdn-icons-png.flaticon.com/512/2966/2966485.png" alt="Healthcare" width="150" style="margin:20px 0;">
+      <br>
+    <a href="http://localhost:3000/find"> <button class="btn" >Find a Doctor</button></a>
+  
+    </div>
+
+    <h2 style="margin-top:40px;">Why Choose MediLink?</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:20px;">
+      <div class="card">
+        <h3>Trusted Doctors</h3>
+        <p>Verified specialists across multiple fields to ensure quality care.</p>
+      </div>
+      <div class="card">
+        <h3>Easy Booking</h3>
+        <p>Book appointments anytime, anywhere with just a few clicks.</p>
+      </div>
+      <div class="card">
+        <h3>Secure Records</h3>
+        <p>Your medical data is safe, private, and accessible only to you.</p>
+      </div>
+      <div class="card">
+        <h3>24/7 Support</h3>
+        <p>Our support team is available round-the-clock for your queries.</p>
+      </div>
+    </div>
+
+    
+  </section>
+
+
+  
+<hr>
+        <h3>🔍 Find the Right Doctor Fast</h3>
+
+        <ul>
+            <li>15,000+ verified doctors</li>
+            <li>Specialists across 30+ medical fields</li>
+            <li>Real patient ratings & reviews</li>
+            <li>Filter by location, specialty, insurance, and availability</li>
+        </ul>
+    </p>
+      <hr>
+  </div>
+
+  <h3 class="art">Some interesting Articles :- </h3>
+
+  <div class="articles">
+  <% for(let infos of info) {%>
+  
+    <a href=<%= infos.url %>>
+    <div class="artcard" >
+        <div class="artcard-image" ><img src=<%= infos.img %> alt="img" height="100%" width="100%"></div>
+        <div class="artcard-content">
+           <p ><%=infos.title%>. </p>
+        </div>
+    </div>
+    </a>
+
+    <% } %>
+  </div>
+ 
+  <p class="qoute">"Take care of your body. It's the only place you have to live."
+— Jim Rohn</p>
+
+
+</body>
+

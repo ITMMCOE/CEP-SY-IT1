@@ -1,0 +1,390 @@
+<% layout("layout/navbar.ejs") %>
+    <title>Register</title>
+    <link href="/register.css" rel="stylesheet">
+    <style>
+        .otp-section {
+            display: none;
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            margin: 15px 0;
+        }
+
+        .otp-section.show {
+            display: block;
+        }
+
+        .otp-boxes {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+
+        .otp-box {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 10px;
+        }
+
+        .otp-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .otp-box:disabled {
+            background-color: #f0f0f0;
+            border-color: #28a745;
+        }
+
+        .message {
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+            margin: 10px 0;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .resend {
+            text-align: center;
+            color: #667eea;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 8px;
+        }
+
+        .resend:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .otp-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .verify-btn {
+            flex: 1;
+            background: #28a745;
+            color: white;
+        }
+
+        .verify-btn:hover:not(:disabled) {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>User Register</h2>
+        <form class="up" method="post" action="/Userreg" id="registrationForm">
+            <!-- Username -->
+            <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+
+            <!-- Email -->
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <!-- Age -->
+            <input type="number" id="age" name="age" placeholder="Enter your age" required>
+
+            <!-- Password -->
+            <input type="password" id="password" name="password" placeholder="Set your password" required>
+
+    
+            <!-- Phone number with OTP -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="telCode">+91</span>
+                <input type="tel" name="phoneNo" pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" maxlength="10" id="phone"  required>
+            </div>
+
+            <!-- Get OTP Button -->
+            <button type="button" id="getOtpBtn" onclick="getOTP()" 
+                    style="background: #667eea; color: white; width: 100%;">
+                Get OTP
+            </button>
+
+            <!-- OTP Verification Section -->
+            <div class="otp-section" id="otpDiv">
+                <p>Enter the 4-digit OTP sent to your phone</p>
+                <div class="otp-boxes">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                </div>
+                <div class="otp-buttons">
+                    <button type="button" class="verify-btn" onclick="verify()">Verify OTP</button>
+                </div>
+                <div class="resend" onclick="resendOTP()">↻ Resend OTP</div>
+            </div>
+
+            <!-- Message Display -->
+            <div class="message" id="msg"></div>
+
+            <!-- Register Button -->
+            <button type="submit"  id="registerBtn" 
+                    style="background: #667eea; color: white; width: 100%;" disabled>
+                Register
+            </button>
+        </form>
+
+        <hr>
+        <p style="text-align: center;">OR</p>
+        <div class="box" style="display: flex; justify-content: center; gap: 20px;">
+            <div class="opt google">
+                <img src="/Google.png" height="53px" width="53px">
+            </div>
+            <div class="opt facebook">
+                <img src="/Facebook.jpg" height="53px" width="53px">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'http://localhost:3000';
+
+        // DOM Elements
+        const phoneInput = document.getElementById('phone');
+        const otpBoxes = document.querySelectorAll('.otp-box');
+        const msgDiv = document.getElementById('msg');
+        const otpDiv = document.getElementById('otpDiv');
+        const getOtpBtn = document.getElementById('getOtpBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const registrationForm = document.getElementById('registrationForm');
+
+  
+        // State
+        let isPhoneVerified = false;
+
+        // Phone input - numbers only
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // OTP boxes navigation
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value.length === 1 && index < otpBoxes.length - 1) {
+                    otpBoxes[index + 1].focus();
+                }
+            });
+
+            box.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                    otpBoxes[index - 1].focus();
+                }
+            });
+
+            box.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const paste = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
+                for (let j = 0; j < paste.length && index + j < otpBoxes.length; j++) {
+                    otpBoxes[index + j].value = paste[j];
+                }
+                if (paste.length > 0) {
+                    otpBoxes[Math.min(index + paste.length - 1, otpBoxes.length - 1)].focus();
+                }
+            });
+        });
+
+        // Form submission
+       // Form submission
+registrationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Check if phone is verified
+    if (!isPhoneVerified) {
+        showMessage('Please verify your phone number first', 'error');
+        return;
+    }
+
+    // Get form values
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const phone = document.getElementById("phone").value.trim();  // Changed from phoneNo to phone
+    const age = document.getElementById("age").value.trim();
+
+    // Validate all fields are filled
+    if (!username || !email || !password || !phone || !age) {
+        alert("All fields are required", 'error');
+        return;
+    }
+
+    // Validate password length
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters", 'error');
+        return;
+    }
+
+    // If all validations pass, submit the form
+    if(username && email && password && phone && age && password.length >= 6){
+    registrationForm.submit();
+    }
+   });
+
+        function getOTP() {
+            const phone = phoneInput.value;
+            if (phone.length !== 10) {
+                showMessage('Please enter valid 10-digit phone number', 'error');
+                return;
+            }
+
+            getOtpBtn.disabled = true;
+            getOtpBtn.textContent = 'Sending OTP...';
+            sendOTPToBackend('+91' + phone);
+        }
+
+        async function sendOTPToBackend(phoneNumber) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/send-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ phone: phoneNumber })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    otpDiv.classList.add('show');
+                    showMessage('OTP sent to ' + phoneNumber, 'success');
+                    getOtpBtn.textContent = 'Resend OTP';
+                    getOtpBtn.disabled = false;
+                   phoneInput.readOnly = true;
+                    otpBoxes[0].focus();
+                } else {
+                    showMessage(data.message || 'Failed to send OTP', 'error');
+                    getOtpBtn.textContent = 'Get OTP';
+                    getOtpBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Network error. Is backend running on port 3000?', 'error');
+                getOtpBtn.textContent = 'Get OTP';
+                getOtpBtn.disabled = false;
+            }
+        }
+
+        function verify() {
+            let otp = '';
+            otpBoxes.forEach(box => otp += box.value);
+
+            if (otp.length !== 4) {
+                showMessage('Please enter complete 4-digit OTP', 'error');
+                return;
+            }
+
+            const phone = '+91' + phoneInput.value;
+            verifyOTPWithBackend(phone, otp);
+        }
+
+        async function verifyOTPWithBackend(phoneNumber, otp) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/verify-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone: phoneNumber,
+                        otp: otp
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    isPhoneVerified = true;
+                    showMessage('Phone verified! ✓', 'success');
+
+                    otpBoxes.forEach(box => {
+                        box.disabled = true;
+                    });
+                    document.querySelector('.verify-btn').disabled = true;
+                    document.querySelector('.verify-btn').textContent = 'Verified ✓';
+                    registerBtn.disabled = false;
+                } else {
+                    showMessage(data.message || 'Invalid OTP', 'error');
+                    otpBoxes.forEach(box => box.value = '');
+                    otpBoxes[0].focus();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Network error', 'error');
+            }
+        }
+
+        function resendOTP() {
+            otpBoxes.forEach(box => {
+                box.value = '';
+                box.disabled = false;
+            });
+            document.querySelector('.verify-btn').disabled = false;
+            document.querySelector('.verify-btn').textContent = 'Verify OTP';
+            isPhoneVerified = false;
+           phoneInput.readOnly = true;
+            otpBoxes[0].focus();
+
+            const phone = '+91' + phoneInput.value;
+            getOtpBtn.disabled = true;
+            getOtpBtn.textContent = 'Sending OTP...';
+            sendOTPToBackend(phone);
+        }
+
+        function showMessage(text, type) {
+            msgDiv.textContent = text;
+            msgDiv.className = 'message show ' + type;
+            setTimeout(() => {
+                msgDiv.classList.remove('show');
+            }, 4000);
+        }
+
+
+       
+    </script>
+</body>
+</html>

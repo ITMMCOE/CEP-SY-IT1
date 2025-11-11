@@ -1,0 +1,29 @@
+<% layout("layout/navbar.ejs") %>
+  <title>MediLink - Notifications</title>
+ <link rel="stylesheet" href="notification.css">
+</head>
+<body>
+
+
+  <!-- Main content -->
+  <div class="container">
+    <h2>Notifications</h2>
+    <p>Stay updated with appointment reminders and important alerts.</p>
+
+   <% for(let appoint of uppcomingSched) {%>
+    <div class="notification">
+      <h3>Upcoming Appointment Reminder</h3>
+      <p>You have an appointment with <strong>Dr. <%=appoint.doctorName %></strong> (<%= appoint.speciality %>) on <strong><%= appoint.date %></strong> at slot <strong><%= appoint.slot %></strong>.</p>
+      <div class="time">Received: <%=appoint.BookedAt %></div>
+    </div>
+
+    <div class="notification">
+      <h3>Payment Confirmation</h3>
+      <p>Your payment of  <strong>₹<%= appoint.fees %> </strong> for your consultation with <strong><%= appoint.doctorName %></strong> has been successfully processed.</p>
+      <div class="time">Received: <%= appoint.BookedAt %></div>
+    </div>
+   <% } %>
+  </div>
+
+
+</body>

@@ -1,0 +1,938 @@
+<% layout("layout/navbar.ejs") %>
+    <title>Clinic Timing & Days Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: transparent;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Get Started Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-overlay.active .popup-box {
+            transform: scale(1);
+        }
+
+        .popup-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #999;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .popup-close-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .popup-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+
+        .popup-box h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .popup-box p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .popup-features {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .popup-feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .popup-feature-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .popup-feature-item span {
+            font-size: 20px;
+            margin-right: 12px;
+        }
+
+        .popup-btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .popup-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .popup-btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Form Container */
+        .schedcontainer {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            color: #444;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="time"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #fafafa;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        input:hover,
+        textarea:hover {
+            border-color: #b8c0e8;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .days-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 2px solid #e8ecff;
+        }
+
+        .days-section > label {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .day-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 18px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .day-card:hover {
+            border-color: #b8c0e8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .day-card.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .day-card.active::before {
+            transform: scaleX(1);
+        }
+
+        .day-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .day-checkbox input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .day-checkbox label {
+            margin: 0;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .time-inputs {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .day-card.active .time-inputs {
+            display: block;
+        }
+
+        .time-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .time-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .time-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .time-group input[type="time"] {
+            padding: 10px 12px;
+            font-size: 14px;
+            min-width: 0;
+            width: 100%;
+        }
+
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            padding: 18px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #c3e6cb;
+            font-weight: 600;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            font-size: 24px;
+            margin-right: 8px;
+        }
+
+        /* Tablet styles */
+        @media screen and (max-width: 768px) {
+            .schedcontainer {
+                padding: 35px 25px;
+                border-radius: 20px;
+            }
+
+            .popup-box {
+                padding: 30px 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .days-section {
+                padding: 25px 20px;
+            }
+
+            .days-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .day-card {
+                padding: 15px;
+            }
+
+            .btn-submit {
+                padding: 16px 35px;
+                font-size: 16px;
+            }
+        }
+
+        /* Mobile styles */
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .schedcontainer {
+                padding: 25px 20px;
+                border-radius: 16px;
+            }
+
+            .popup-box {
+                padding: 30px 20px;
+                max-width: 95%;
+            }
+
+            .popup-box h2 {
+                font-size: 24px;
+            }
+
+            .popup-box p {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+            .form-group {
+                margin-bottom: 22px;
+            }
+
+            label {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            input[type="text"],
+            input[type="tel"],
+            input[type="time"],
+            textarea {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            .days-section {
+                padding: 20px 15px;
+            }
+
+            .days-section > label {
+                font-size: 16px;
+            }
+
+            .days-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .day-card {
+                padding: 14px;
+            }
+
+            .day-checkbox label {
+                font-size: 15px;
+            }
+
+            .time-row {
+                gap: 10px;
+            }
+
+            .time-group input[type="time"] {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .btn-submit {
+                padding: 15px 30px;
+                font-size: 15px;
+            }
+
+            textarea {
+                min-height: 80px;
+            }
+        }
+
+        /* Small mobile styles */
+        @media screen and (max-width: 360px) {
+            .schedcontainer {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .days-grid {
+                gap: 10px;
+            }
+
+            .day-card {
+                padding: 12px;
+            }
+
+            .time-label {
+                font-size: 12px;
+            }
+        }
+
+        /* Landscape mobile optimization */
+        @media screen and (max-height: 600px) and (orientation: landscape) {
+            .container {
+                padding: 10px;
+            }
+
+            .schedcontainer {
+                padding: 20px;
+                max-width: 95%;
+            }
+
+            .header {
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .days-section {
+                padding: 15px;
+            }
+
+            .days-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .container {
+                background: white;
+                padding: 0;
+            }
+
+            .schedcontainer {
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            .btn-submit {
+                display: none;
+            }
+
+            .popup-overlay {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Get Started Popup -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-box">
+            <button class="popup-close-btn" onclick="closePopup()">&times;</button>
+            
+            <div class="popup-icon">🏥</div>
+            
+            <h2>Welcome to Clinic Setup</h2>
+            <p>Let's configure your clinic's operating schedule in just a few simple steps!</p>
+            
+            <div class="popup-features">
+                <div class="popup-feature-item">
+                    <span>📅</span>
+                    <div>Select your operating days</div>
+                </div>
+                <div class="popup-feature-item">
+                    <span>⏰</span>
+                    <div>Set timings for each day</div>
+                </div>
+                <div class="popup-feature-item">
+                    <span>✅</span>
+                    <div>Automatic time slot generation</div>
+                </div>
+            </div>
+            
+            <button class="popup-btn-primary" onclick="closePopup()">Get Started</button>
+        </div>
+    </div>
+
+    <!-- Original Form -->
+    <div class="schedcontainer">
+        <div class="header">
+            <h1><span class="icon">🏥</span>Clinic Timing & Days</h1>
+            <p class="subtitle">Configure your clinic's operating schedule</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✓ Clinic timings saved successfully!
+        </div>
+
+        <form id="clinicForm">
+            <div class="days-section">
+                <label>Operating Days & Timings <span class="required">*</span></label>
+                <div class="days-grid">
+                    <div class="day-card" id="card-monday">
+                        <div class="day-checkbox">
+                            <input type="checkbox" id="monday" value="Monday">
+                            <label for="monday">Monday</label>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-row">
+                                <div class="time-group">
+                                    <div class="time-label">From</div>
+                                    <input type="time" id="monday-from">
+                                </div>
+                                <div class="time-group">
+                                    <div class="time-label">To</div>
+                                    <input type="time" id="monday-to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-card" id="card-tuesday">
+                        <div class="day-checkbox">
+                            <input type="checkbox" id="tuesday" value="Tuesday">
+                            <label for="tuesday">Tuesday</label>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-row">
+                                <div class="time-group">
+                                    <div class="time-label">From</div>
+                                    <input type="time" id="tuesday-from">
+                                </div>
+                                <div class="time-group">
+                                    <div class="time-label">To</div>
+                                    <input type="time" id="tuesday-to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-card" id="card-wednesday">
+                        <div class="day-checkbox">
+                            <input type="checkbox" id="wednesday" value="Wednesday">
+                            <label for="wednesday">Wednesday</label>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-row">
+                                <div class="time-group">
+                                    <div class="time-label">From</div>
+                                    <input type="time" id="wednesday-from">
+                                </div>
+                                <div class="time-group">
+                                    <div class="time-label">To</div>
+                                    <input type="time" id="wednesday-to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-card" id="card-thursday">
+                        <div class="day-checkbox">
+                            <input type="checkbox" id="thursday" value="Thursday">
+                            <label for="thursday">Thursday</label>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-row">
+                                <div class="time-group">
+                                    <div class="time-label">From</div>
+                                    <input type="time" id="thursday-from">
+                                </div>
+                                <div class="time-group">
+                                    <div class="time-label">To</div>
+                                    <input type="time" id="thursday-to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-card" id="card-friday">
+                        <div class="day-checkbox">
+                            <input type="checkbox" id="friday" value="Friday">
+                            <label for="friday">Friday</label>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-row">
+                                <div class="time-group">
+                                    <div class="time-label">From</div>
+                                    <input type="time" id="friday-from">
+                                </div>
+                                <div class="time-group">
+                                    <div class="time-label">To</div>
+                                    <input type="time" id="friday-to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-card" id="card-saturday">
+                        <div class="day-checkbox">
+                            <input type="checkbox" id="saturday" value="Saturday">
+                            <label for="saturday">Saturday</label>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-row">
+                                <div class="time-group">
+                                    <div class="time-label">From</div>
+                                    <input type="time" id="saturday-from">
+                                </div>
+                                <div class="time-group">
+                                    <div class="time-label">To</div>
+                                    <input type="time" id="saturday-to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-card" id="card-sunday">
+                        <div class="day-checkbox">
+                            <input type="checkbox" id="sunday" value="Sunday">
+                            <label for="sunday">Sunday</label>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-row">
+                                <div class="time-group">
+                                    <div class="time-label">From</div>
+                                    <input type="time" id="sunday-from">
+                                </div>
+                                <div class="time-group">
+                                    <div class="time-label">To</div>
+                                    <input type="time" id="sunday-to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Save Clinic Timings</button>
+        </form>
+    </div>
+
+    <form action="/schedule" method="post" class="scheduleform" hidden>
+        
+    </form>
+
+    <script>
+        // Popup functions
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('popupOverlay').classList.add('active');
+            }, 500);
+        });
+ 
+       
+        let scheduleform=document.querySelector(".scheduleform");
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('active');
+        }
+
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+            }
+        });
+
+        // Original form JavaScript
+        const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+        days.forEach(day => {
+            const checkbox = document.getElementById(day);
+            const card = document.getElementById(`card-${day}`);
+
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        });
+
+        function generateTimeSlots(fromTime, toTime) {
+            const slots = {};
+            
+            if (!fromTime || !toTime) return slots;
+            
+            const [fromHour, fromMin] = fromTime.split(':').map(Number);
+            const [toHour, toMin] = toTime.split(':').map(Number);
+            
+            let currentHour = fromHour;
+            
+            while (currentHour < toHour) {
+                const nextHour = currentHour + 1;
+                const startTime = formatTime(currentHour, 0);
+                const endTime = formatTime(nextHour, 0);
+                const slotKey = `${startTime} - ${endTime}`;
+                slots[slotKey] = [];
+                currentHour++;
+            }
+            
+            return slots;
+        }
+        
+        function formatTime(hour, minute) {
+            const period = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+            return `${displayHour}:${minute.toString().padStart(2, '0')}`;
+        }
+
+
+        document.getElementById('clinicForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const schedule = {};
+            let hasAtLeastOneDay = false;
+
+            days.forEach(day => {
+                const checkbox = document.getElementById(day);
+                if (checkbox.checked) {
+                    const from = document.getElementById(`${day}-from`).value;
+                    const to = document.getElementById(`${day}-to`).value;
+                    
+                    if (from && to) {
+                        hasAtLeastOneDay = true;
+                        const capitalizedDay = day.charAt(0).toUpperCase() + day.slice(1);
+                        schedule[capitalizedDay] = generateTimeSlots(from, to);
+                    }
+                }
+            });
+
+            if (!hasAtLeastOneDay) {
+                alert('Please select at least one operating day with timings.');
+                return;
+            }
+
+
+            console.log('Schedule with Time Slots:', schedule);
+         
+
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+
+             
+               
+
+                fetch("http://localhost:3000/schedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(schedule)
+    })
+    .then((res) =>{ res.json();})
+    .catch(console.error);
+
+            
+            setTimeout(() => {
+                 
+              //  scheduleform.submit();
+                successMessage.style.display = 'none';
+            }, 3000);
+
+            this.reset();
+            document.querySelectorAll('.day-card').forEach(card => {
+                card.classList.remove('active');
+            });
+        });
+    </script>
+</body>

@@ -1,0 +1,172 @@
+
+<%layout("layout/navbar.ejs")%>
+    <title>User Profile</title>
+
+</head>
+<link rel="stylesheet" href="/userProfile.css">
+<body>
+    <div class="containerr">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Profile Avatar" class="profile-avatar">
+            <div class="profile-info">
+                  <h1 data-editable="true"><%=username%></h1>
+                <p>Email:- <span ><%= email %></span></p>
+                <p>Phone: <span data-editable="true"><%=phoneNo%></span></p>
+                <p>Age: <span data-editable="true"><%=age%></span></p>
+               <div class="edit-buttons">
+                    <button class="edit-btn" id="editBtn" onclick="toggleEditing()">Enable Editing</button>
+                    <button class="save-btn" onclick="saveProfile()">Save Profile</button>
+                </div>
+            </div>
+        </div>
+
+
+         <!-- Appointments Section -->
+        <div class="appointments-section">
+            <h2>Upcoming Appointments</h2>
+
+           <% for(let schedApp of SchedulappointmentInfos ){%>
+            <div class="appointment-item">
+                <p><strong>Doctor:</strong><%=schedApp.doctorName%></p>
+                <p><strong>Date:</strong><%=schedApp.date%> ,- <%=schedApp.slot%></p>
+                <p><strong>Status:</strong> Scheduled</p>
+
+                <form action="/userProfile" method="post">
+                    <input type="text" name="appointId" hidden  value="<%= schedApp._id%>" style="display: none;" >
+                    <button>Cancel Appointment</button> </form>
+      
+            </div>
+            <%}%>
+        
+        </div>
+
+        <!-- Previous Appointments Section -->
+        <div class="appointments-section">
+            <h2>Previous Appointments</h2>
+           
+              <% for(let visited of visitedappointInfos ){%>
+            <div class="appointment-item">
+                <p><strong>Doctor:</strong><%=visited.doctorName%></p>
+                <p><strong>Date:</strong><%=visited.date%> , slot:- <%=visited.slot%></p>
+                <p><strong>Status:</strong> Completed</p>
+                  
+                <a href="/find/<%=visited.doctorId%>/book"><button>rebook Appointment</button></a>
+            </div>
+            <%}%>
+
+        </div>
+ </div>
+
+ <form action="/userprofile?_method=PUT" id="editForm" hidden method="post">
+        <input type="text" class="username" name="username">
+        
+        <input type="text" class="phoneNo" name="phoneNo">
+        <input type="number" class="age" name="age">
+    </form>
+
+    <script>
+        // Global variable
+        let editingEnabled = false;
+
+        // Toggle Editing Function
+        function toggleEditing() {
+            editingEnabled = !editingEnabled;
+            const fields = document.querySelectorAll('[data-editable="true"]');
+            const editBtn = document.getElementById('editBtn');
+            const appointmentsSections = document.querySelectorAll('.appointments-section');
+
+            fields.forEach(field => {
+                field.contentEditable = editingEnabled;
+                if (editingEnabled) {
+                    field.style.borderBottom = "2px dashed #007BFF";
+                    field.style.padding = "2px 5px";
+                    field.style.backgroundColor = "#f0f8ff";
+                } else {
+                    field.style.borderBottom = "";
+                    field.style.padding = "";
+                    field.style.backgroundColor = "";
+                }
+            });
+
+            // Hide/Show appointment sections while editing
+            appointmentsSections.forEach(section => {
+                section.style.display = editingEnabled ? "none" : "block";
+            });
+
+            // Update button text and color
+            if (editBtn) {
+                editBtn.innerText = editingEnabled ? "Disable Editing" : "Enable Editing";
+                editBtn.style.background = editingEnabled ? "#dc3545" : "#007BFF";
+            }
+        }
+
+        // Save Profile Function
+        function saveProfile() {
+            try {
+                // Get editable fields in order
+                const username = document.querySelector('h1[data-editable="true"]').innerText.trim();
+
+                const phoneNo = document.querySelector('p:nth-child(3) [data-editable="true"]').innerText.trim();
+                const age = document.querySelector('p:nth-child(4) [data-editable="true"]').innerText.trim();
+
+                // Validate data
+                if (!username  || !phoneNo || !age) {
+                    alert("Please fill all fields!");
+                    return;
+                }
+
+               
+
+                // Phone validation
+                if (phoneNo.length < 10) {
+                    alert("Please enter a valid phone number!");
+                    return;
+                }
+
+                // Age validation
+                if (isNaN(age) || age < 1 || age > 120) {
+                    alert("Please enter a valid age!");
+                    return;
+                }
+
+                // Set values to hidden form
+                document.querySelector(".username").value = username;
+
+                document.querySelector(".phoneNo").value = phoneNo;
+                document.querySelector(".age").value = age;
+
+                console.log("Profile data:", { username, phoneNo, age });
+
+                // Submit the form
+                const editForm = document.querySelector("#editForm");
+                if (editForm) {
+                    alert("Profile saved successfully!");
+                    editForm.submit();
+                }
+
+                // Disable editing after save
+                if (editingEnabled) {
+                    toggleEditing();
+                }
+            } catch (error) {
+                console.error("Error saving profile:", error);
+                alert("Failed to save profile. Please try again.");
+            }
+        }
+
+        // Prevent form submission on Enter key in editable fields
+        document.addEventListener('DOMContentLoaded', function() {
+            const editableFields = document.querySelectorAll('[data-editable="true"]');
+            editableFields.forEach(field => {
+                field.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.blur(); // Remove focus
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<% layout("layout/navbar.ejs") %>
+    <title>Company_Login</title>
+    <link href="login.css" rel="stylesheet" >
+</head>
+<body>
+      <div class="login-container">
+    <h2>Doctor Login</h2>
+    <form class="up" method="post" action="/compAuth">
+      <input type="email" name="email" placeholder="Enter your email" required>
+      <input type="password" name="password" placeholder="Enter your password" required>
+      <button type="submit">Login</button>
+    </form>
+    <hr>
+  </div>
+
+  <div class="cont2">
+     <p>you don't have an account?<a href="http://localhost:3000/doctorreg"> Register</a></p>
+  </div>
+  
+</body>
+</html>

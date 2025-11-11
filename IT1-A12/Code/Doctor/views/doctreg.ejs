@@ -1,0 +1,253 @@
+<% layout("layout/navbar.ejs") %>
+    <title>Doctor Register</title>
+    <link href="/register.css" rel="stylesheet" >
+
+<body>
+    <div class="login-container">
+        <h2>Doctor Registration</h2>
+        <form class="up" method="post" action="/doctorreg" id="doctorRegistrationForm">
+            <!-- Email -->
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <!-- Password -->
+            <input type="password" id="password" name="password" placeholder="Set your password" required>
+
+            <!-- Phone number with OTP -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="telCode">+91</span>
+                <input type="tel" name="phoneNo" pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" maxlength="10" id="phone" required>
+            </div>
+
+            <!-- Get OTP Button -->
+            <button type="button" id="getOtpBtn" onclick="getOTP()">
+                Get OTP
+            </button>
+
+            <!-- OTP Verification Section -->
+            <div class="otp-section" id="otpDiv">
+                <p>Enter the 4-digit OTP sent to your phone</p>
+                <div class="otp-boxes">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+                </div>
+                <div class="otp-buttons">
+                    <button type="button" class="verify-btn" onclick="verify()">Verify OTP</button>
+                </div>
+                <div class="resend" onclick="resendOTP()">↻ Resend OTP</div>
+            </div>
+
+            <!-- Message Display -->
+            <div class="message" id="msg"></div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn" disabled>
+                Continue
+            </button>
+        </form>
+
+        <hr>
+      
+      
+    </div>
+
+
+    <script>
+        const BACKEND_URL = 'http://localhost:3000';
+
+        // DOM Elements
+        const phoneInput = document.getElementById('phone');
+        const otpBoxes = document.querySelectorAll('.otp-box');
+        const msgDiv = document.getElementById('msg');
+        const otpDiv = document.getElementById('otpDiv');
+        const getOtpBtn = document.getElementById('getOtpBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const doctorRegistrationForm = document.getElementById('doctorRegistrationForm');
+
+        // State
+        let isPhoneVerified = false;
+
+        // Phone input - numbers only
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // OTP boxes navigation
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value.length === 1 && index < otpBoxes.length - 1) {
+                    otpBoxes[index + 1].focus();
+                }
+            });
+
+            box.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                    otpBoxes[index - 1].focus();
+                }
+            });
+
+            box.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const paste = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
+                for (let j = 0; j < paste.length && index + j < otpBoxes.length; j++) {
+                    otpBoxes[index + j].value = paste[j];
+                }
+                if (paste.length > 0) {
+                    otpBoxes[Math.min(index + paste.length - 1, otpBoxes.length - 1)].focus();
+                }
+            });
+        });
+
+        // Form submission
+        doctorRegistrationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Check if phone is verified
+            if (!isPhoneVerified) {
+                showMessage('Please verify your phone number first', 'error');
+                return;
+            }
+
+            // Get form values
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const phone = document.getElementById("phone").value.trim();
+
+            // Validate all fields
+            if (!email || !password || !phone) {
+                showMessage("All fields are required", 'error');
+                return;
+            }
+
+            // Validate password length
+            if (password.length < 6) {
+                showMessage("Password must be at least 6 characters", 'error');
+                return;
+            }
+
+            // All validations passed - submit form
+            doctorRegistrationForm.submit();
+        });
+
+        function getOTP() {
+            const phone = phoneInput.value;
+            if (phone.length !== 10) {
+                showMessage('Please enter valid 10-digit phone number', 'error');
+                return;
+            }
+
+            getOtpBtn.disabled = true;
+            getOtpBtn.textContent = 'Sending OTP...';
+            sendOTPToBackend('+91' + phone);
+        }
+
+        async function sendOTPToBackend(phoneNumber) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/send-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ phone: phoneNumber })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    otpDiv.classList.add('show');
+                    showMessage('OTP sent to ' + phoneNumber, 'success');
+                    getOtpBtn.textContent = 'Resend OTP';
+                    getOtpBtn.disabled = false;
+                    phoneInput.readOnly = true;
+                    otpBoxes[0].focus();
+                } else {
+                    showMessage(data.message || 'Failed to send OTP', 'error');
+                    getOtpBtn.textContent = 'Get OTP';
+                    getOtpBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Network error. Is backend running on port 3000?', 'error');
+                getOtpBtn.textContent = 'Get OTP';
+                getOtpBtn.disabled = false;
+            }
+        }
+
+        function verify() {
+            let otp = '';
+            otpBoxes.forEach(box => otp += box.value);
+
+            if (otp.length !== 4) {
+                showMessage('Please enter complete 4-digit OTP', 'error');
+                return;
+            }
+
+            const phone = '+91' + phoneInput.value;
+            verifyOTPWithBackend(phone, otp);
+        }
+
+        async function verifyOTPWithBackend(phoneNumber, otp) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/verify-otp`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone: phoneNumber,
+                        otp: otp
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    isPhoneVerified = true;
+                    showMessage('Phone verified! ✓', 'success');
+
+                    otpBoxes.forEach(box => {
+                        box.disabled = true;
+                    });
+                    document.querySelector('.verify-btn').disabled = true;
+                    document.querySelector('.verify-btn').textContent = 'Verified ✓';
+                    submitBtn.disabled = false;
+                } else {
+                    showMessage(data.message || 'Invalid OTP', 'error');
+                    otpBoxes.forEach(box => box.value = '');
+                    otpBoxes[0].focus();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Network error', 'error');
+            }
+        }
+
+        function resendOTP() {
+            otpBoxes.forEach(box => {
+                box.value = '';
+                box.disabled = false;
+            });
+            document.querySelector('.verify-btn').disabled = false;
+            document.querySelector('.verify-btn').textContent = 'Verify OTP';
+            isPhoneVerified = false;
+            submitBtn.disabled = true;
+            phoneInput.readOnly = true;
+            otpBoxes[0].focus();
+
+            const phone = '+91' + phoneInput.value;
+            getOtpBtn.disabled = true;
+            getOtpBtn.textContent = 'Sending OTP...';
+            sendOTPToBackend(phone);
+        }
+
+        function showMessage(text, type) {
+            msgDiv.textContent = text;
+            msgDiv.className = 'message show ' + type;
+            setTimeout(() => {
+                msgDiv.classList.remove('show');
+            }, 4000);
+        }
+    </script>
+</body>

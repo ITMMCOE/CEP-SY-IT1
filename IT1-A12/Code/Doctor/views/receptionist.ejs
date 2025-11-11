@@ -1,0 +1,34 @@
+
+<% layout("layout/navbar.ejs") %>
+  <title>Receptionist Dashboard</title>
+  <link rel="stylesheet" href="/receptionist.css">
+  <script>
+    const doctorId=<%-JSON.stringify(doctorId)%>;
+    const doctorinfo=<%-JSON.stringify(doctorinfo)%>;
+    const weekDays=<%-JSON.stringify(weekDays)%>;
+    const slots=<%-JSON.stringify(slots)%>;
+    const days=<%-JSON.stringify(days)%>;
+    const AllappointmentInfo=<%-JSON.stringify(AllappointmentInfo)%>;
+    const onlineBookedApp=<%-JSON.stringify(onlineBookedApp)%>;
+     const activeSection = '<%= typeof activeSection !== "undefined" ? activeSection : "dashboard" %>';
+  </script>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Receptionist</h2>
+      <a class="active" onclick="loadPage(event, 'dashboard')">Dashboard</a>
+      <a onclick="loadPage(event, 'appointments')">Appointments</a>
+      <a onclick="loadPage(event, 'book')">Book Walk-In</a>
+     
+    </aside>
+
+    <main id="content" class="content"></main>
+  </div>
+
+  <script src="/receptionist.js"></script>
+    <script>
+    window.addEventListener('DOMContentLoaded', () => loadPage(null, activeSection));
+  </script>
+</body>
+</html>

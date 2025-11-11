@@ -1,0 +1,160 @@
+   <%layout("layout/navbar.ejs")%>
+    <title>Doctor Profile</title>
+  <link rel="stylesheet" href="/DoctProfile.css">
+</head>
+<body>
+   
+    <div class="containerr">
+        <div class="profile-header">
+            <img src="https://as2.ftcdn.net/v2/jpg/02/60/04/09/1000_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg" alt="Doctor Image" class="doctor-image">
+            <div class="profile-info">
+                <h1><%= info.name %></h1>
+                <p class="specialization"><%= info.Speciality %></p>
+
+                <p class="rating"><b>Rating:</b> <%= info.rating %> / 5 </p>
+                <p class="experience"><b>Experience:</b> <%=info.Experience%></p>
+                <p class="qualification"><b>Qualification:</b><%= info.qualification %></p>
+            </div>
+        </div>
+
+      <div class="edit-buttons">
+
+                  <% if(currUser && role=="doctor") {%>    
+            <button class="save-btn" id="editBtn" onclick="toggleEditing()">Enable Editing</button>
+            <button class="save-btn save" onclick="saveProfile()">Save Profile</button>
+             <a href="/find/<%= info.id %>/receptionist"><button class="save-btn" >Recieptionist panel</button></a>
+             <% } %>
+        </div>
+
+
+        <div class="about-section">
+            <h2>About Me</h2>
+            <p data-editable="true"> <%=info.aboutMe%></p>
+        </div>
+
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <ul>
+                <li ><strong>Clinic Name:-</strong><span data-editable="true"> <%=info.clinicName%></span></li>
+               <li  ><strong>Fees:</strong> <span data-editable="true"> <%=info.fees%></span></li>
+                <li ><strong>Location:</strong> <span data-editable="true"><%= info.address %></span>  &nbsp;&nbsp;<a  href="/find/<%= info.id %>/map" target="_blank" class="location-link">See Location</a></li>
+                <li  ><strong>Email:</strong> <span> <%=info.email%></span></li>
+                <li  ><strong>Phone:</strong> <span data-editable="true"><%=info.phoneNumber%></span></li>
+                <li ><strong>Website:</strong><span data-editable="true"><%= info.website %></span></li>
+            </ul>
+        </div>
+
+        <div class="availability">
+
+            <% if(currUser && role=="doctor") {%>
+            <h2>your's availablity</h2>
+            <% } else{ %>
+                 <h2>Doctor's availablity</h2>
+                 <% } %>
+
+
+
+
+
+           <form action="/find/<%= info.id %>/book" method="post">
+            <div class="availability-schedule">
+                  <input type="hidden" name="appointment_day" id="appointment_day">
+                 <div class="availability-schedule">
+                    <div class="availability-btn" data-day="Monday" data-time="9:00 AM - 12:00 PM">Mon: <span data-editable="true">9:00 AM - 12:00 PM </span> </div>
+                    <div class="availability-btn" data-day="Tuesday" data-time="1:00 PM - 5:00 PM" > Tue:<span data-editable="true"> 1:00 PM - 5:00 PM</span></div>
+                    <div class="availability-btn" data-day="Wednesday" data-time="9:00 AM - 12:00 PM" >Wed:<span data-editable="true"> 9:00 AM - 12:00 PM</span></div>
+                    <div class="availability-btn" data-day="Thursday" data-time="1:00 PM - 5:00 PM" >Thu:<span data-editable="true"> 1:00 PM - 5:00 PM</span></div>
+                    <div class="availability-btn" data-day="Friday" data-time="9:00 AM - 12:00 PM" >Fri:<span data-editable="true"> 9:00 AM - 12:00 PM</span></div>
+                </div>
+            </div>
+        </div>
+
+        
+        <% if(role!="doctor") {%>
+        <div class="book-appointment">
+ <button class="book-btn" type="submit" id="bookBtn" >Select a day to book appointment</button>
+        </div>
+        <% } %>
+        
+        
+        </form>
+
+
+
+
+
+        
+
+
+
+
+        <div class="review-section">
+            <h2>Reviews</h2>
+            <div class="review-list" >
+
+                <% for(let rev of reviews) {%>
+                <div class="review-item">
+                      <h3>Ratings:-</h3>
+                     <p class="starability-result" data-rating="<%= rev.rating %>">   </p>
+                    <p class="review-text">"<%= rev.Comment %>."</p>
+                    <p><strong>- <%= rev.author.username %></strong></p>
+                </div>
+                  <% } %>
+               
+            </div>
+
+                <% if(currUser && role=="user") {%>
+            <div class="review-form">
+                <h3>Submit Your Review</h3>
+
+                <form action="/find/<%= info.id %>" method="post">
+                
+                    <label for="star">Rating:-   <br>
+                       <fieldset id="star" name="rating"  class="starability-coinFlip" >
+                 <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                 <input type="radio" id="first-rate1" name="rating" value="1" />
+                 <label for="first-rate1" title="Terrible">1 star</label>
+                 <input type="radio" id="first-rate2" name="rating" value="2" />
+                 <label for="first-rate2" title="Not good">2 stars</label>
+                 <input type="radio" id="first-rate3" name="rating" value="3" />
+                 <label for="first-rate3" title="Average">3 stars</label>
+                 <input type="radio" id="first-rate4" name="rating" value="4" />
+                  <label for="first-rate4" title="Very good">4 stars</label>
+                  <input type="radio" id="first-rate5" name="rating" value="5" />
+                 <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+
+                 </label>
+
+                <textarea id="review-text" rows="4" name="comment" placeholder="Write your review..." required></textarea>
+                <button type="submit" id="submit-review">Submit Review</button>
+                </form>
+            </div>
+        <% }%>
+    </div>
+
+
+   
+        <% if(currUser && role=="user") {%> 
+ <!--Hidden form--->
+ <form action="/find/<%= info.id %>?_method=PUT" id="editForm" hidden method="post">
+    <input type="text" class="clinicName"  name="clinicName">
+    <input type="text" name="address"  class="address" >
+    <input type="number" name="fees" class="fees">
+    <input type="number" name="lon" class="lon">
+    <input type="number" name="lat" class="lat">
+    <input type="text" name="website" class="website">
+    <input type="text" name="aboutMe" class="aboutMe">
+ </form>
+      <% }%>
+      
+
+</body>
+
+
+
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrI3IiYteS0XnhqlWGwHluR8zXCqrY6FU&callback=initMap&v=weekly"></script>
+
+    <script async defer src="/DoctorProfile.js"></script>

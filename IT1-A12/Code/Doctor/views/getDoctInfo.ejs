@@ -1,0 +1,96 @@
+
+<% layout("layout/navbar.ejs") %>
+  <title>Company Registeration</title>
+ <link rel="stylesheet" href="/getDoctInfo.css">
+</head>
+<body>
+<div class="outerbox"> 
+  <div class="containerr">
+    <div class="info-section">
+    <img src="/MediLink-.png" alt="MediLink Logo" style="width: 300px; height: auto; position: relative; top: 1.4rem;">
+      <h2>Let's get started</h2>
+      <p>MediLink makes it simple for patients to connect with the right doctors. It’s quick to join, with no hidden fees or complicated steps.</p>
+    </div>
+
+    <div class="form-section">
+      <form method="post" action="/CompInfo"  enctype="multipart/form-data">
+        <label for="first-name">First name</label>
+        <input type="text" id="first-name" name="firstname"  required>
+         
+        <label for="last-name">Last name</label>
+        <input type="text" id="last-name" name="lastname"  required>
+
+        <label for="practice-name">Clinic name</label>
+        <input type="text" id="practice-name" name="ClinicName"  required>
+
+        <label for="qua">Qualification</label>
+        <input id="qua" name="qualification" type="text"  required></input>
+
+        <label for="exp">Experiance</label>
+        <input id="exp" name="Experience" type="text" placeholder="[yrs]-years"  required></input>
+
+
+        <label for="specialty">Practice or provider's specialty</label>
+        <select id="specialty" name="specialty" required>
+
+          <option>Select</option>
+           <% for(let speciality of specialtyCategories) {%>
+        <option><%= speciality %></option>
+        <% } %>
+        <option>other</option>
+        </select>
+       
+       <label for="UploadFile">Upload Certificate:-</label>
+        <input type="file" name="file" required />
+
+
+         <br>
+        <label for="size">Practice size</label>
+        <input id="size" name="size" type="number"  required></input>
+
+          <label for="fees">Practicing Fees</label>
+        <input id="fees" name="fees" type="number"  required></input>
+
+
+        <!--<label for="phone">Phone number</label>
+        <div class="phcont">
+          <span class="telCode">+91</span>
+        <input type="tel"  pattern="[0-9]{10}" placeholder="enter phone number" maxlength="10" id="phone" name="phone" required>
+        </div>-->
+
+
+       <br><br>
+        <label for="compAdd">Enter Company address</label>
+        <input type="text" id="compAdd" name="compAdd"  required>
+        <div class="curLoc" >
+         Use current Location 
+        </div>
+        <!--Coordinates sending-->
+        <input type="text" hidden id="lat" name="lat">
+        <input type="text" hidden id="lng" name="lon">
+        <br>
+        <br><br>
+        
+      
+
+        
+        <label for="aboutMe">Tell me about You</label>
+        <textarea name="aboutMe" id="aboutMe" rows="5" cols="10"></textarea>
+
+
+
+              <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+</div> 
+</body>
+<script>
+   window.APP_CONFIG = {
+    googleMapsApiKey: '<%= GMapAPIkey %>',
+    // You can add more config values here
+  };
+</script>
+
+<script src="/getDoctInfo.js"> </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=GMapAPIkey %>&callback=initMap&v=weekly"></script>

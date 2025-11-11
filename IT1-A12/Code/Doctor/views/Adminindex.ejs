@@ -1,0 +1,36 @@
+
+  <title>Admin Dashboard - Doctor Booking</title>
+  <link rel="stylesheet" href="/Adminstyle.css" />
+</head>
+<body>
+  <header>Doctor Booking - Admin Portal</header>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="active" onclick="loadPage('dashboard')">Dashboard</a>
+      <a href="#" onclick="loadPage('doctors')">Doctors</a>
+      <a href="#" onclick="loadPage('patients')">Patients</a>
+      <a href="#" onclick="loadPage('appointments')">Appointments</a>
+      <a href="#" onclick="loadPage('transactions')">Handle Transactions</a>
+      <a href="#" onclick="loadPage('reports')">Reports</a>
+      <a href="#" onclick="loadPage('settings')">Settings</a>
+    </div>
+
+    <!-- Dynamic Content Area -->
+    <div class="main-content" id="content"></div>
+  </div>
+
+  <script>
+   window.APP_CONFIG = {
+    doctorCount:doctCount,
+    userCount:userCount,
+    // You can add more config values here
+  };
+</script>
+
+
+
+  <script defer async src="/Adminscript.js"></script>
+</body>
+

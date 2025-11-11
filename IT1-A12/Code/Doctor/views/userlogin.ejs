@@ -1,0 +1,32 @@
+<% layout("layout/navbar.ejs") %>
+    <title>user-Login</title>
+    <link href="login.css" rel="stylesheet" >
+</head>
+<body>
+      <div class="login-container">
+    <h2>user Login</h2>
+    <form class="up" method="post" action="/userAuth">
+      <input name="email" type="email" placeholder="Enter your email" required>
+      <input name="password" type="password" placeholder="Enter your password" required>
+      <button type="submit">Login</button>
+    </form>
+    <hr>
+    <p>OR</p>
+<div class="box">
+        <div class="opt google">
+          <img src="/Google.png" alt="Google" height="53" width="53">
+        </div>
+        
+          <div class="opt facebook">
+          <img src="/Facebook.jpg" alt="Facebook" height="53" width="53">
+        </div>
+        </div>
+
+  </div>
+
+  <div class="cont2">
+     <p>you don't have an account?<a href="http://localhost:3000/Userreg"> Register</a></p>
+  </div>
+  
+</body>
+</html>

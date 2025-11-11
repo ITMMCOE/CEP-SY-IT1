@@ -1,0 +1,99 @@
+<% layout("layout/navbar.ejs") %>
+    <title>Confirm & Pay - Doctor Appointment</title>
+    <link rel="stylesheet" href="/ConfNPay.css" >
+</head>
+<body>
+    <script>
+        const days=<%- JSON.stringify(days)%>;
+    </script>
+    <div class="container">
+        <header class="header">
+            <button class="back-btn">←</button>
+            <h1 class="header-title">Confirm & Pay</h1>
+      
+        </header>
+
+        <div class="content">
+            <div class="left-section">
+                <div class="doctor-section">
+                    <div class="doctor-header">
+                        <div class="online-indicator"></div>
+                        <span class="doctor-status"><%= name %> - <%= Speciality %></span>
+                    </div>
+                    
+
+                    
+                    <p class="availability-text">Available for consultation - Response within 5 minutes.</p>
+                    
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            96% of patients found online consultation helpful
+                        </li>
+                        <li class="feature-item">
+                            <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                            </svg>
+                            Consultation available via video call or chat
+                        </li>
+                    </ul>
+                </div>
+
+                <form action="/find/<%= id %>/book/pay" class="Pay" method="post">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="form-label" for="patientName">Patient name</label>
+                        <input type="text" id="patientName" name="patientName" class="form-input" placeholder="Enter full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="phoneNumber">Phone number</label>
+                        <input type="tel" id="phoneNumber" name="phoneNo" class="form-input" placeholder="Enter phone number">
+                    </div>
+
+                    <input type="text" id="day" name="day" hidden>
+                    <input type="hidden" id="appointmentTime" name="appointmentTime">
+                    
+                       <label for="dateInput">Date</label>
+                     <input type="date" name="date" id="dateInput" class="form-input">
+       
+                          <label>Time Slot</label>
+                       <select id="slotSelect" name="slot" class="form-input">
+                     <%- slots.map(x => `<option value="${x}">${x}</option>`).join("") %>
+                      
+                   </select> 
+                   
+                    
+                    <a href="#" class="coupon-link">Have a coupon code?</a>
+                </div>
+
+                <div class="fee-section">
+                    <div class="fee-label">Consultation Fee</div>
+                    <div class="fee-amount" name="j">
+                        <span class="currency">₹</span><%= fees %>
+                    </div>
+                </div>
+
+                <button class="continue-btn" type="submit">Continue to payment</button>
+
+                <!-- Debug Panel (only shows when DEBUG_MODE = true) -->
+                <div id="debugPanel" style="display: none; background: #fef3c7; border: 2px solid #fbbf24; border-radius: 10px; padding: 15px; margin-top: 20px; font-size: 14px; font-family: monospace;">
+                    <div style="font-weight: bold; color: #92400e; margin-bottom: 10px;">🔍 Debug Information:</div>
+                    <div id="debugInfo" style="color: #78350f; line-height: 1.6;"></div>
+                </div>
+
+            </div>
+            </form>
+
+            <div class="right-section">
+               
+                <img src="https://cdn.theatlantic.com/thumbor/-bGZC0-POPkjCE9JgdEVnVwmyBo=/0x0:1200x675/960x540/media/img/mt/2022/08/procrastinate_doctor/original.gif" alt="he heee" height="100%" width="100%">
+            </div>
+        </div>
+    </div>
+
+    <script defer src="/ConfNPay.js"></script>
+</body>
+</html>

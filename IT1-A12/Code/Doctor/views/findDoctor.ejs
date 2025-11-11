@@ -1,0 +1,80 @@
+<% layout("layout/navbar.ejs") %>
+
+
+  <title>Search Doctors - MediLink</title>
+ <link rel="stylesheet" href="/findDoctor.css">
+ <link rel="stylesheet" href="/ratingStar.css">
+</head>
+<body>
+  <header>Find a Doctor</header>
+  <div class="container">
+
+   <!--filter and search-->
+    <form action="/find" method="post">
+    <div class="filters">
+  
+      <select name="Speciality">
+          <option>Specialty</option>
+        <% for(let speciality of specialtyCategories) {%>
+        <option><%= speciality %></option>
+        <% } %>
+      </select>
+
+      <select name="Experience">
+        <option>Experience</option>
+        <option>0-5 years</option>
+        <option>5-10 years</option>
+        <option>10+ years</option>
+      </select>
+
+      <select name="rating">
+        <option>Sort by Rating</option>
+        <option>5★</option>
+        <option>4★ & above</option>
+        <option>3★ & above</option>
+      </select>
+
+     
+    </div>
+<span>
+      <input type="text" id="doct" name="doctName" placeholder="Doctor Name">
+      <button class="btn" type="submit"> Search</button>
+    </span>
+  </form> 
+  
+  
+       
+    <!-- Doctor Card  -->
+   <% if(doctInfo && doctInfo.length>0){ %>
+    <% for(let doct of doctInfo){ %>
+    <div class="doctor-card">
+      <div class="doctor-info">
+        <h3><%= doct.name%></h3>
+        <p><%= doct.Speciality %></p>
+        <p><%= doct.Experience %></p>
+        <p>Rating: <p class="starability-result" data-rating=<%= doct.rating %>></p></p><!--print stars-->
+      </div>
+      <form action="/find/<%= doct.id %>" method="get">
+      <button type="submit" class="btn">View Profile</button>
+      </form>
+    </div>
+    <% } %>
+    <% } else{ %>
+  
+      <div class="notFoundPage">
+        <h1>404 <div>❤</div></h1>
+        <img src="https://cdn-icons-png.flaticon.com/512/3621/3621426.png" alt="Doctor Illustration">
+          <h2>Doctor Not Found</h2>
+         <p>It looks like this page has taken a sick day. Our medical team is working on a diagnosis!</p>
+         <div class="icons">
+        <div class="icon">🩺</div>
+        <div class="icon">💖</div>
+        <div class="icon">🏥</div>
+         </div>
+        </div>
+      <% } %>
+
+
+   
+
+</body>
