@@ -1,5 +1,5 @@
 ## 🖼️ Preview  
-![SwachhaRakshak Screenshot](screenshot.png)
+![SwachhaRakshak Screenshot](screenshort.png)
 
 -----------------------------------------------------------------------------
 
