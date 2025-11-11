@@ -1,0 +1,297 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+}
+
+/* Header */
+header {
+  background-color: #0077b6;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+  #verifyButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    position: relative;
+    left: 8rem;
+    top: 3.6rem;
+  }
+
+  #verifyButton:hover {
+    background-color: #45a049; /* Slightly darker green */
+    transform: scale(1.05); /* Slight zoom on hover */
+  }
+
+  
+/* Layout */
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #003366;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar a {
+  padding: 15px 20px;
+  text-decoration: none;
+  color: white;
+  display: block;
+  transition: background 0.3s;
+ 
+}
+
+.sidebar a:hover {
+  background-color: #005f99;
+}
+
+.sidebar a.active {
+  background-color: #0077b6;
+}
+
+/* Main Content */
+/* Main Content - Add scroll functionality */
+.main-content {
+  flex-grow: 1;
+  padding: 25px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 60px); /* Subtract header height */
+}
+
+/* Style the scrollbar for main content */
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Fix modal overflow - Update the modal div styles */
+#doctorModal > div,
+#patientModal > div {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Style modal scrollbar */
+#doctorModal > div::-webkit-scrollbar,
+#patientModal > div::-webkit-scrollbar {
+  width: 6px;
+}
+
+#doctorModal > div::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+#doctorModal > div::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+#doctorModal > div::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.main-content h2 {
+  margin-top: 0;
+  font-size: 1.8em;
+  color: #333;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  flex: 1;
+  min-width: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 25px;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.card p {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #0077b6;
+}
+
+.hide{
+  display: none;
+}
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 1em;
+}
+
+.button:hover {
+  background-color: #005f99;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #0077b6;
+  color: white;
+}
+
+tr:hover {
+  background-color: #f2f8ff;
+}
+
+.button.small {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  margin: 2px;
+}
+
+.button.red {
+  background-color: #d9534f;
+}
+
+.button.red:hover {
+  background-color: #b52b27;
+}
+
+.settings-form {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/*certificate*/
+
+        .cert-wrapper {
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .view-button {
+            background: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+            padding: 10px 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .view-button:hover {
+            background: #45a049;
+        }
+
+        .image-container {
+            display: none;
+            background: transparent;
+            padding: 20px;
+            position: relative;
+        }
+
+        .image-container.active {
+            display: block;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            display: block;
+        }
+
+        .exit-button {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: #f44336;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .exit-button:hover {
+            background: #d32f2f;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
