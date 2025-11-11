@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SwachhaRakshak - Waste Management</title>
+<style>
+/* === General Styles === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  line-height: 1.6;
+  color: #333;
+  background: #f4f4f4;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* === Navbar === */
+nav {
+  background: linear-gradient(45deg, #00796B, #004D40); /* attractive teal gradient */
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+nav h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  cursor: default;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.8rem;
+}
+nav ul li {
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+nav ul li:hover {
+  color: #80cbc4;
+}
+/* === Hero Section === */
+header {
+  background: url('How-IoT-advances-smart-waste-management-scaled.jpg') no-repeat center center/cover;
+  height: 90vh;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1rem;
+  position: relative;
+  transition: background 0.5s ease;
+}
+header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.65); /* stronger dark overlay for contrast */
+  z-index: 0;
+}
+header h2, header p, header button {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+header h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+header p {
+  font-size: 1.3rem;
+  margin-bottom: 1.8rem;
+  max-width: 700px;
+}
+header button {
+  padding: 0.9rem 2rem;
+  background: #26a69a; /* teal accent */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+header button:hover {
+  background: #80cbc4;
+}
+/* === Section === */
+section {
+  padding: 3rem 1rem;
+  max-width: 1100px;
+  margin: auto;
+}
+section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.4rem;
+  color: #00796B;
+  font-weight: 700;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.card {
+  background: #fff;
+  padding: 1.8rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: 0.4s ease;
+  cursor: default;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+.card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #004D40;
+}
+.card p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.5;
+}
+/* === Contact / Report Form === */
+form {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  max-width: 650px;
+  margin: auto;
+  position: relative;
+}
+form input, form textarea {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.7rem 0;
+  border: 1.8px solid #00796B;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease;
+}
+form input:focus, form textarea:focus {
+  outline: none;
+  border-color: #26a69a;
+  box-shadow: 0 0 10px #26a69a;
+}
+form button {
+  background: #00796B;
+  color: #fff;
+  padding: 1rem 1.8rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 1.3rem;
+  transition: background 0.3s ease;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: block;
+  width: 100%;
+}
+form button:hover {
+  background: #004D40;
+}
+/* === Image Preview === */
+#preview {
+  margin-top: 1rem;
+  display: none;
+  text-align: center;
+  font-weight: 600;
+  color: #00796B;
+}
+#preview img {
+  max-width: 100%;
+  max-height: 300px;
+  height: auto;
+  border-radius: 15px;
+  margin-top: 0.6rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+/* === Saved Reports List === */
+#reportList {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#reportList li {
+  background: #fff;
+  margin: 12px 0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  position: relative;
+  font-size: 1.05rem;
+  color: #222;
+}
+.report-img {
+  max-width: 140px;
+  border-radius: 12px;
+  margin-top: 10px;
+  display: block;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.delete-btn {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 7px 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+.delete-btn:hover {
+  background: #9a0007;
+}
+a.maps-link {
+  color: #00796B;
+  font-weight: 600;
+  text-decoration: underline;
+}
+/* === Footer === */
+footer {
+  background: linear-gradient(45deg, #00796B, #004D40);
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  margin-top: 3rem;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+}
+/* Responsive */
+@media (max-width: 600px) {
+  header h2 {
+    font-size: 2rem;
+  }
+  nav ul {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  form button {
+    font-size: 1rem;
+  }
+}
+</style>
+</head>
+<body>
+<!-- === Navbar === -->
+<nav>
+  <h1>SwachhaRakshak</h1>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#contact">Report</a></li>
+  </ul>
+</nav>
+<!-- === Hero === -->
+<header>
+  <h2>Smart Waste Management Made Easy</h2>
+  <p>Report garbage, track cleaning, and keep your city clean with SwachhaRakshak.</p>
+  <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Report Garbage</button>
+</header>
+<!-- === About Section === -->
+<section id="about">
+  <h2>About Us</h2>
+  <p style="text-align:center; max-width:800px; margin:auto;">
+    SwachhaRakshak is a smart waste management solution that allows citizens to report garbage through photos and location, helping municipalities track and resolve issues efficiently. Our mission is to build cleaner, healthier, and smarter cities.
+  </p>
+</section>
+<!-- === Features Section === -->
+<section id="features">
+  <h2>Features</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>📸 Photo Upload</h3>
+      <p>Citizens can upload photos of garbage hotspots instantly.</p>
+    </div>
+    <div class="card">
+      <h3>📍 GPS Tracking</h3>
+      <p>Automatic location tagging for accurate reporting.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Dashboard</h3>
+      <p>Municipal staff get a live dashboard for issue resolution.</p>
+    </div>
+  </div>
+</section>
+<!-- === Contact / Report Section === -->
+<section id="contact">
+  <h2>Report an Issue</h2>
+  <form id="reportForm">
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <textarea id="message" rows="5" placeholder="Describe the issue..." required></textarea>
+    <input type="file" id="photo" accept="image/*" />
+    <div id="preview">
+      <p>📷 Selected Image Preview:</p>
+      <img id="previewImg" src="" alt="Image Preview" />
+    </div>
+    <button type="submit">Submit Report</button>
+  </form>
+  <h3>Saved Reports:</h3>
+  <ul id="reportList"></ul>
+</section>
+<!-- === Footer === -->
+<footer>
+  <p>SwachhaRakshak 2025</p>
+</footer>
+<script>
+// ====== Local Storage Reports ======
+let reports = JSON.parse(localStorage.getItem("reports")) || [];
+displayReports();
+
+// Image preview
+document.getElementById("photo").addEventListener("change", function() {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById("previewImg").src = e.target.result;
+      document.getElementById("preview").style.display = "block";
+    }
+    reader.readAsDataURL(file);
+  } else {
+    document.getElementById("preview").style.display = "none";
+  }
+});
+
+// Form submission with improved GPS
+document.getElementById("reportForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+  const photo = document.getElementById("previewImg").src || "";
+
+  if (!name || !email || !message) {
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  if (navigator.geolocation) {
+    const geoOptions = {
+      enableHighAccuracy: true,
+      timeout: 10000, // 10 seconds max
+      maximumAge: 0
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude.toFixed(6);
+        const lon = position.coords.longitude.toFixed(6);
+        saveReport(name, email, message, photo, lat, lon);
+      },
+      (err) => {
+        alert("Location not found or permission denied. Report will be saved without location.");
+        saveReport(name, email, message, photo, "N/A", "N/A");
+      },
+      geoOptions
+    );
+  } else {
+    alert("Geolocation is not supported by your browser.");
+    saveReport(name, email, message, photo, "N/A", "N/A");
+  }
+});
+
+function saveReport(name, email, message, photo, lat, lon) {
+  const report = {
+    name,
+    email,
+    message,
+    photo,
+    lat,
+    lon,
+    timestamp: new Date().toLocaleString()
+  };
+  reports.push(report);
+  localStorage.setItem("reports", JSON.stringify(reports));
+  displayReports();
+  document.getElementById("reportForm").reset();
+  document.getElementById("preview").style.display = "none";
+  alert(`Report submitted!\nLocation: ${lat}, ${lon}`);
+}
+
+function displayReports() {
+  const list = document.getElementById("reportList");
+  list.innerHTML = "";
+  reports.forEach((r, i) => {
+    const mapsLink = (r.lat !== "N/A" && r.lon !== "N/A")
+      ? `<a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=${r.lat},${r.lon}" target="_blank" rel="noopener noreferrer">View on Map</a>`
+      : "No location";
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <b>${r.name}</b> (${r.email})<br>
+      ${r.message}<br>
+      ${r.photo ? `<img class="report-img" src="${r.photo}" alt="Report Image"><br>` : ""}
+      Location: ${r.lat}, ${r.lon} - ${mapsLink}<br>
+      <small>${r.timestamp}</small>
+      <button class="delete-btn" onclick="deleteReport(${i})">Delete</button>
+    `;
+    list.appendChild(li);
+  });
+}
+
+function deleteReport(index) {
+  reports.splice(index, 1);
+  localStorage.setItem("reports", JSON.stringify(reports));
+  displayReports();
+}
+</script>
+</body>
+</html>
