@@ -1,0 +1,40 @@
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+  height: 100vh;
+}
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+gmp-map {
+  height: 100vh;
+  margin-bottom: 1.4rem;
+   
+    border-top: 2px black solid;
+      border-bottom: 2px black solid;
+}
+.back
+{
+  height: fit-content;
+width: fit-content;
+padding: 2px 8px;
+border: 1px black solid;
+position: relative;
+
+left: 12px;
+font-size: 1.5rem;
+}
+.back:hover{
+  cursor: pointer;
+  opacity: 0.5;
+}

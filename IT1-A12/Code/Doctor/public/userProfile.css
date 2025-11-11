@@ -1,0 +1,186 @@
+ body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .containerr {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-info h1 {
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .profile-info p {
+            color: #666;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .profile-info button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .profile-info button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Appointment History Section */
+        .appointments-section {
+            margin-top: 40px;
+        }
+
+        .appointments-section h2 {
+            font-size: 24px;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .appointment-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .appointment-item p {
+            color: #666;
+        }
+
+        .appointment-item button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .appointment-item button:hover {
+            background-color: #4cae4c;
+        }
+
+        /* Add to userProfile.css */
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.edit-btn, .save-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.edit-btn {
+    background: #007BFF;
+    color: white;
+}
+
+.save-btn {
+    background: #28a745;
+    color: white;
+}
+
+[data-editable="true"][contenteditable="true"] {
+    border-bottom: 2px dashed #007BFF;
+    padding: 2px 5px;
+    background-color: #f0f8ff;
+}
+
+
+        /* Payment Section */
+        .payment-methods-section {
+            margin-top: 40px;
+        }
+
+        .payment-methods-section h2 {
+            font-size: 24px;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .payment-methods-section p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .payment-methods-section button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .payment-methods-section button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .appointments-section, .payment-methods-section {
+                padding: 10px;
+            }
+        }

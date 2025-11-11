@@ -1,0 +1,382 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    background: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.3rem;
+    margin-bottom: 2.3rem;
+    margin-left: 5rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 16px;
+    color: #6b7280;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.header-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    flex: 1;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    gap: 40px;
+    padding: 32px 24px;
+}
+
+.left-section {
+    flex: 1;
+    max-width: 480px;
+}
+
+.right-section {
+    width: 320px;
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 24px;
+    height: fit-content;
+}
+
+.doctor-section {
+    margin-bottom: 32px;
+}
+
+.doctor-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.online-indicator {
+    width: 12px;
+    height: 12px;
+    background: #10b981;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.doctor-status {
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.doctors-list {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.doctor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: -8px;
+    border: 2px solid white;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+}
+
+.doctor-count {
+    background: #e5e7eb;
+    color: #6b7280;
+    padding: 8px 12px;
+    border-radius: 24px;
+    font-size: 14px;
+    margin-left: 16px;
+}
+
+.availability-text {
+    color: #6b7280;
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+.feature-list {
+    list-style: none;
+    margin-bottom: 32px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: #374151;
+}
+
+.feature-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    color: #10b981;
+}
+
+.form-section {
+    margin-bottom: 32px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Date and Slot input styling to match form-input */
+#dateInput,
+#slotSelect {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    background-color: white;
+    color: #333;
+}
+
+#dateInput:focus,
+#slotSelect:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+#dateInput:hover,
+#slotSelect:hover {
+    border-color: #9ca3af;
+}
+
+/* Style the labels for date and slot */
+label[for="dateInput"],
+label:has(+ #slotSelect) {
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 20px;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* Style for date input calendar icon */
+#dateInput::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+#dateInput::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* Style for select dropdown arrow */
+#slotSelect {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 16px center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.coupon-link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 12px;
+}
+
+.coupon-link:hover {
+    text-decoration: underline;
+}
+
+.fee-section {
+    margin-bottom: 24px;
+}
+
+.fee-label {
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.fee-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.currency {
+    font-size: 24px;
+}
+
+.continue-btn {
+    width: 100%;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 24px;
+}
+
+.continue-btn:hover {
+    background: #2563eb;
+}
+
+.continue-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.promo-section {
+    text-align: center;
+}
+
+.promo-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    position: relative;
+}
+
+.promo-icon::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 3px solid #fbbf24;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.promo-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.promo-text {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.footer {
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 13px;
+    background: #f9fafb;
+}
+
+.guarantee-text {
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.emergency-text {
+    color: #ef4444;
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        gap: 24px;
+        padding: 24px 16px;
+    }
+
+    .right-section {
+        width: 100%;
+    }
+
+    .header {
+        padding: 16px;
+    }
+
+    .fee-amount {
+        font-size: 28px;
+    }
+
+    .container {
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}

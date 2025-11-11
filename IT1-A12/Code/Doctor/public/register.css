@@ -1,0 +1,430 @@
+/* Background gradient */
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to right, #add8e6, #ffffff, #87ceeb);
+  font-family: Arial, sans-serif;
+  overflow: visible;
+}
+
+
+footer {
+  margin-top: 7rem;
+}
+
+/* Card box */
+.login-container {
+  background: #fff;
+  padding: 4.5rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  width: 390px;
+  text-align: center;
+  position: relative;
+  bottom: 2rem;
+  margin: auto;
+  margin-bottom: 3rem;
+  top: 3rem;
+}
+
+/* Heading */
+.login-container h2 {
+  height: fit-content;
+
+  margin-bottom: 13px;
+  color: #1e3a8a;
+  position: relative;
+  bottom: 4.5rem;
+  font-size: 3.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+}
+
+/* Input fields */
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.login-container input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+/* Button */
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.login-container button:hover {
+  background: #2563eb;
+}
+
+.login-container button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.up {
+  position: relative;
+  bottom: 3rem;
+}
+
+.box {
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.opt {
+  height: 53px;
+  width: 53px;
+  position: relative;
+  top: 8px;
+}
+
+.opt img {
+  height: 100%;
+  width: 100%;
+}
+
+.opt:hover {
+  cursor: pointer;
+}
+
+.google {
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+}
+
+.google:hover {
+  opacity: 0.9;
+  background-color: rgba(205, 205, 205, 0.262);
+}
+
+.facebook {
+  border: 0.6px black solid;
+}
+
+.facebook:hover {
+  opacity: 0.9;
+}
+
+/* Phone container */
+.phcont {
+  display: flex;
+  align-items: center;
+}
+
+.telCode {
+  padding: 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  height: 22px;
+  position: relative;
+  border-radius: 10px 0 0 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+#phone {
+  flex: 1;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+/* ========== OTP SECTION ========== */
+.otp-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  display: none;
+}
+
+.otp-section.show {
+  display: block;
+}
+
+.otp-section p {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.otp-boxes {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  justify-content: center;
+}
+
+.otp-box {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.otp-box:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.otp-box:disabled {
+  background-color: #f0f0f0;
+  border-color: #28a745;
+  color: #999;
+}
+
+.otp-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.verify-btn {
+  flex: 1;
+  background-color: #28a745;
+  padding: 12px 16px;
+}
+
+.verify-btn:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.verify-btn:disabled {
+  background: #9ca3af;
+  opacity: 0.6;
+}
+
+.resend {
+  margin-top: 15px;
+  text-align: center;
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 8px;
+}
+
+.resend:hover {
+  color: #2563eb;
+  text-decoration: underline;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+}
+
+.message {
+  margin-top: 15px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  display: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.message.show {
+  display: block;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ================= MOBILE RESPONSIVENESS ================= */
+@media (max-width: 768px) {
+  body {
+    padding: 0 10px;
+    background: linear-gradient(to bottom, #add8e6, #ffffff, #87ceeb);
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 350px;
+    padding: 2rem;
+    top: 2rem;
+  }
+
+  .login-container h2 {
+    font-size: 2.2rem;
+    bottom: 2.5rem;
+  }
+
+  .login-container input {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .login-container button {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .up {
+    bottom: 1.5rem;
+  }
+
+  .box {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .opt {
+    height: 45px;
+    width: 45px;
+  }
+
+  .otp-boxes {
+    gap: 8px;
+  }
+
+  .otp-box {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+
+  .cont2 {
+    font-size: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+    padding: 0 10px;
+  }
+}
+
+/* Even more compact for smaller phones */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1.5rem;
+  }
+
+  .login-container h2 {
+    font-size: 2rem;
+  }
+
+  .cont2 {
+    font-size: 0.95rem;
+  }
+
+  .opt {
+    height: 40px;
+    width: 40px;
+  }
+
+  .opt img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .otp-boxes {
+    gap: 6px;
+  }
+
+  .otp-box {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+/* ================= SMALL SCREEN FIXES ================= */
+@media (max-width: 400px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .login-container {
+    width: 90%;
+    padding: 1.2rem;
+    top: 2rem;
+    box-sizing: border-box;
+  }
+
+  .login-container h2 {
+    font-size: 1.8rem;
+    bottom: 1.5rem;
+  }
+
+  .login-container input {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .login-container button {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .box {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .opt {
+    height: 40px;
+    width: 40px;
+  }
+
+  .cont2 {
+    font-size: 0.9rem;
+    padding: 0 5px;
+    margin-top: 2.5rem;
+  }
+
+  .otp-section {
+    padding: 15px;
+  }
+
+  .otp-boxes {
+    gap: 5px;
+  }
+
+  .otp-box {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+}
