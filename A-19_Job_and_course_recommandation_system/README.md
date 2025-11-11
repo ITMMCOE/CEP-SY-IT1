@@ -99,6 +99,7 @@ python manage.py runserver
 Open: http://127.0.0.1:8000
 
 🧩 System Modules
+
 👤 User Module
 
 Register/Login via OTP
@@ -172,6 +173,6 @@ Guide: Mr. Nikhil S. Dhavase
 Assistant Professor, IT Department, MMCOE Pune
 
 For queries, contact:
-📧 tushardeshpande@example.com
+📧 tushardeshpande2025.it@mmcoe.edu.in
 
 Made with ❤️ by Team Job & Course Recommendation System @MMCOE
