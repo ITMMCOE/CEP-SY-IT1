@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>appointment</title>
+       <link rel="stylesheet" href="/navbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/rating.css">
+</head>
+<body>
+      <div class="navbar">
+      <div class="logo"><a href="/" style="height: 100%; width: 100%;"><img src="/logo2.png" height="100%" width="100%" alt="LOGO"></a></div>
+      <div class="options">
+          <div class="icons"><a href="/">Home </a></div>
+
+             
+      <% if(currUser) {%> 
+         <div class="icons"><a href="/help">Help</a></div>
+       <% } %> 
+         
+        <div >
+       
+      <% if(!currUser) {%> 
+    <div class="dropdown-toggle"  onclick="toggleDropdown()">Login</div>
+    <div class="dropdown-content" id="dropdownMenu">
+      <a href="/userAuth">user login</a>
+      <a href="/compAuth">Doctor login</a>
+    </div>
+    <% } %>
+      </div>
+
+        
+      <%if(currUser  && role=="user"){%>
+            <a href="/notify"><div class="profile"><i class="fa-solid fa-bell"></i></div></a>
+       <% } %>     
+
+      <%if(currUser){%>
+      <a href="/logout"><div class="dropdown-toggle" >Logout</div></a>
+      <% } %>
+
+     
+
+
+
+
+       <%if(role=="user" && currUser) {%>
+        <a href="/userProfile"><div class="profile"><i class="fa-solid fa-user"></i></div></a>
+        <% } else if(role=="doctor" && currUser){ %>
+          
+                   <a href="/doctProfile"><div class="profile"><i class="fa-solid fa-user"></i></div></a>
+          <% } %>
+        
+      </div>
+    </div>
+
+
+
+   <div class="container">
+    
+    <!--FLASH using-->
+         <% if(success && success.length>0){ %>
+      <div class="alert-button success">
+    <span><%= success %></span>
+    <button class="close-btn" onclick="this.parentElement.remove()"> <i class="fa-solid fa-xmark"></i></button>
+     </div>
+      <% } %>
+
+      <% if(fail && fail.length>0){ %>
+      <div class="alert-button danger">
+    <span><%= fail %></span>
+    <button class="close-btn" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+      <% } %>
+      <!--end flash-->
+   
+    <%-body %>
+   </div>
+
+
+  <footer  style="background-color: aliceblue;">
+  <div class="footer-container" >
+    <!-- Company Info -->
+    <div class="footer-section about">
+      <h3>About Us</h3>
+      <p>Welcome to Medlink, your trusted partner in simplifying healthcare access.
+
+       We are a dedicated team on a mission to bridge the gap between patients and healthcare providers through a seamless, efficient, and user-friendly online platform. Our doctor appointment booking website is designed to make scheduling medical appointments easier, faster, and more convenient—for both patients and doctors.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-section links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-section contact">
+      <h3>Contact</h3>
+      <p>Email: medlink@gmail.com</p>
+      <p>Phone: +91 9834666733</p>
+    </div>
+
+    <!-- Social Media -->
+    <div class="footer-section social">
+      <h3>Follow Us</h3>
+      <a href="https://facebook.com" target="_blank">🌐 Facebook</a>
+      <a href="https://twitter.com" target="_blank">🐦 Twitter</a>
+      <a href="https://instagram.com" target="_blank">📸 Instagram</a>
+      <a href="https://linkedin.com" target="_blank">💼 LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+   <p>&copy; 2025 Medlink. All Rights Reserved.</p>
+
+  </div>
+</footer>   
+</body>
+
+<script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdownMenu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Close dropdown when clicking outside
+    window.onclick = function(event) {
+      // If the clicked element is not the toggle div
+      if (!event.target.matches('.dropdown-toggle')) {
+        const dropdown = document.getElementById('dropdownMenu');
+        if (dropdown.style.display === 'block') {
+          dropdown.style.display = 'none';
+        }
+      }
+    };
+  </script>
+</html>
