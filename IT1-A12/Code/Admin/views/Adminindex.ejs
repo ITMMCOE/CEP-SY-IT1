@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Doctor Booking</title>
+  <link rel="stylesheet" href="/Adminstyle.css" />
+  <script>
+    const userCount = <%- JSON.stringify(userCount) %>;
+    const doctCount = <%- JSON.stringify(doctCount) %>;
+    const doctors=<%-JSON.stringify(doctors)%>;
+        const patients=<%-JSON.stringify(patient)%>;
+    const activeSection = '<%= typeof activeSection !== "undefined" ? activeSection : "dashboard" %>';
+  </script>
+</head>
+<body>
+  <header>Doctor Booking - Admin Portal</header>
+
+  <div class="container">
+    <div class="sidebar">
+      <a onclick="loadPage(event, 'dashboard')">Dashboard</a>
+      <a onclick="loadPage(event, 'doctors')">Doctors</a>
+      <a onclick="loadPage(event, 'patients')">Patients</a>
+      <a onclick="loadPage(event, 'appointments')">Appointments</a>
+
+
+      <a onclick="loadPage(event, 'settings')">Settings</a>
+    </div>
+
+    <div class="main-content" id="content"></div>
+  </div>
+
+  <script src="/Adminscript.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => loadPage(null, activeSection));
+  </script>
+</body>
+</html>
