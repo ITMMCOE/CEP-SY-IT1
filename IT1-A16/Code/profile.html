@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Profile — Emergency Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=dev-20251028-2">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="logo">🩺</div><h1>Profile</h1></div>
+    <nav class="main-nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/actions.html">Actions</a><a href="/map.html">Map</a><a href="/chat.html">Chat</a></nav>
+    <div class="top-actions">
+      <button id="install-btn" class="icon-btn hidden" aria-label="Install app">⬇️</button>
+      <button id="theme-toggle" aria-label="Toggle theme" class="icon-btn">🌗</button>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card">
+      <h2>Medical Profile</h2>
+      <div id="profile-root"></div>
+    </section>
+  </main>
+  <script src="profile-manager.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>

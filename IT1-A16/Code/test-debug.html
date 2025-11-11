@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Test - Emergency Services</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+    .debug-panel { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .status { padding: 10px; margin: 5px 0; border-radius: 4px; }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .info { background: #d1ecf1; color: #0c5460; }
+    button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    #console { max-height: 300px; overflow-y: auto; background: #2d2d2d; color: #00ff00; padding: 10px; font-family: monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>🔧 Emergency Services Debug Panel</h1>
+  
+  <div class="debug-panel">
+    <h2>📍 Geolocation Test</h2>
+    <div id="geo-status" class="status info">Status: Not tested</div>
+    <button onclick="testGeolocation()">Test Geolocation</button>
+    <div id="geo-result"></div>
+  </div>
+
+  <div class="debug-panel">
+    <h2>🤖 Chatbot Test</h2>
+    <input type="text" id="chat-test-input" placeholder="Type: heart attack, bleeding, etc." style="width: 300px; padding: 8px;">
+    <button onclick="testChatbot()">Test Chatbot Response</button>
+    <div id="chat-result"></div>
+  </div>
+
+  <div class="debug-panel">
+    <h2>📊 Console Output</h2>
+    <div id="console"></div>
+  </div>
+
+  <div class="debug-panel">
+    <h2>🔗 Quick Links</h2>
+    <a href="/"><button>Home Page</button></a>
+    <a href="/map.html"><button>Map Page</button></a>
+    <a href="/chat.html"><button>Chat Page</button></a>
+  </div>
+
+  <script>
+    const consoleDiv = document.getElementById('console');
+    
+    function log(msg, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      consoleDiv.innerHTML += `<div>[${timestamp}] [${type.toUpperCase()}] ${msg}</div>`;
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;
+      console.log(`[${type}]`, msg);
+    }
+
+    function testGeolocation() {
+      const statusDiv = document.getElementById('geo-status');
+      const resultDiv = document.getElementById('geo-result');
+      
+      log('Testing geolocation...');
+      statusDiv.textContent = 'Status: Testing...';
+      statusDiv.className = 'status info';
+      
+      if (!navigator.geolocation) {
+        statusDiv.textContent = 'Status: Geolocation not supported';
+        statusDiv.className = 'status error';
+        log('Geolocation not supported by browser', 'error');
+        return;
+      }
+      
+      log('Geolocation API available');
+      statusDiv.textContent = 'Status: Requesting location...';
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const accuracy = position.coords.accuracy;
+          
+          statusDiv.textContent = 'Status: Success ✓';
+          statusDiv.className = 'status success';
+          
+          resultDiv.innerHTML = `
+            <div style="margin-top: 10px;">
+              <strong>Location obtained:</strong><br>
+              Latitude: ${lat.toFixed(6)}<br>
+              Longitude: ${lng.toFixed(6)}<br>
+              Accuracy: ${accuracy.toFixed(0)} meters<br>
+              <a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}&zoom=15" target="_blank">View on OpenStreetMap</a>
+            </div>
+          `;
+          
+          log(`Location: ${lat.toFixed(6)}, ${lng.toFixed(6)} (±${accuracy.toFixed(0)}m)`, 'success');
+        },
+        (error) => {
+          statusDiv.textContent = `Status: Error - ${error.message}`;
+          statusDiv.className = 'status error';
+          
+          resultDiv.innerHTML = `
+            <div style="margin-top: 10px; color: #721c24;">
+              <strong>Error:</strong> ${error.message}<br>
+              <strong>Error Code:</strong> ${error.code}<br>
+              <strong>Possible causes:</strong><br>
+              • Location permission denied<br>
+              • Location services disabled<br>
+              • Timeout or network issue<br>
+              <br>
+              <strong>Solutions:</strong><br>
+              1. Check browser location permissions<br>
+              2. Enable location services on your device<br>
+              3. Try using HTTPS or localhost<br>
+            </div>
+          `;
+          
+          log(`Geolocation error: ${error.message} (code: ${error.code})`, 'error');
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    }
+
+    function testChatbot() {
+      const input = document.getElementById('chat-test-input').value.trim();
+      const resultDiv = document.getElementById('chat-result');
+      
+      if (!input) {
+        resultDiv.innerHTML = '<div style="color: red;">Please enter a test phrase</div>';
+        return;
+      }
+      
+      log(`Testing chatbot with input: "${input}"`);
+      
+      const keywords = {
+        'heart attack':['chest pain','heart attack','severe chest','cardiac','tightness in chest','pressure chest','heart hurt','squeezing chest'],
+        'bleeding':['bleed','bleeding','heavy bleed','blood loss','severe bleeding','cut','wound','gash','laceration'],
+        'choking':['choke','choking','cant breathe','can\'t breathe','airway blocked','swallowed wrong','gagging'],
+        'burns':['burn','burning','scald','scalding','hot oil','fire burn','steam burn','thermal injury'],
+        'stroke':['stroke','slurred','face droop','arm weakness','speech difficulty','numbness','paralysis','confusion sudden'],
+        'fracture':['broken bone','fracture','bone break','limb injury','deformed limb','can\'t move'],
+        'allergic':['allergic reaction','allergy','anaphylaxis','swelling','hives','difficulty breathing allergy','epipen'],
+      };
+      
+      const text = input.toLowerCase();
+      let matchedIntent = null;
+      let matchedKeyword = null;
+      
+      for (const intent in keywords) {
+        for (const kw of keywords[intent]) {
+          if (text.includes(kw)) {
+            matchedIntent = intent;
+            matchedKeyword = kw;
+            break;
+          }
+        }
+        if (matchedIntent) break;
+      }
+      
+      if (matchedIntent) {
+        resultDiv.innerHTML = `
+          <div style="margin-top: 10px; padding: 10px; background: #d4edda; border-radius: 4px;">
+            <strong>✓ Match Found!</strong><br>
+            Intent: <strong>${matchedIntent}</strong><br>
+            Matched keyword: "<strong>${matchedKeyword}</strong>"<br>
+            The chatbot would show: ${matchedIntent} response
+          </div>
+        `;
+        log(`Chatbot matched intent: ${matchedIntent} (keyword: ${matchedKeyword})`, 'success');
+      } else {
+        resultDiv.innerHTML = `
+          <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 4px;">
+            <strong>⚠ No specific match</strong><br>
+            The chatbot would show the default emergency response
+          </div>
+        `;
+        log('No specific intent matched, using default response', 'info');
+      }
+    }
+
+    // Test on load
+    window.addEventListener('load', () => {
+      log('Debug panel loaded');
+      log('User Agent: ' + navigator.userAgent);
+      log('Geolocation available: ' + (navigator.geolocation ? 'Yes' : 'No'));
+      log('HTTPS: ' + (location.protocol === 'https:' ? 'Yes' : 'No'));
+      log('Localhost: ' + (location.hostname === 'localhost' || location.hostname === '127.0.0.1' ? 'Yes' : 'No'));
+    });
+  </script>
+</body>
+</html>

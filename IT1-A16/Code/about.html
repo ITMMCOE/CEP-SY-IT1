@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>About — Emergency Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=dev-20251028-2">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="logo">ℹ️</div><h1>About</h1></div>
+    <nav class="main-nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/actions.html">Actions</a><a href="/map.html">Map</a><a href="/profile.html">Profile</a></nav>
+    <div class="top-actions">
+      <button id="install-btn" class="icon-btn hidden" aria-label="Install app">⬇️</button>
+      <button id="theme-toggle" aria-label="Toggle theme" class="icon-btn">🌗</button>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card">
+      <h2>About this Demo</h2>
+      <p>This Emergency Services demo is an offline-capable progressive web app created for demonstration purposes. It stores data locally in your browser and does not send personal data to any server.</p>
+      <h3>Install</h3>
+      <p>Use your browser install UI (Add to Home screen) or device install prompt to install the app. You can also use the manifest shortcuts on supported platforms.</p>
+      <h3>Privacy</h3>
+      <p>All profile data, contacts, and chat history remain in localStorage on your device. No server-side storage is used.</p>
+    </section>
+  </main>
+  <script src="script.js" defer></script>
+</body>
+</html>

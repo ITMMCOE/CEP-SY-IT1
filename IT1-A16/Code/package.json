@@ -1,0 +1,16 @@
+{
+  "name": "emergency-services-pwa",
+  "version": "1.0.0",
+  "description": "Emergency Services PWA — offline-first web app with maps, chatbot, and profile management",
+  "main": "simple-server.js",
+  "scripts": {
+    "start": "node simple-server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}

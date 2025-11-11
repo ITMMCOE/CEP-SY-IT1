@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Actions — Emergency Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b1f6b6.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="styles.css?v=dev-20251028-2">
+</head>
+<body>
+    <header class="topbar">
+    <div class="brand"><div class="logo">🚑</div><h1>Actions</h1></div>
+    <nav class="main-nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/map.html">Map</a><a href="/profile.html">Profile</a><a href="/chat.html">Chat</a></nav>
+    <div class="top-actions">
+      <button id="install-btn" class="icon-btn hidden" aria-label="Install app">⬇️</button>
+      <button id="theme-toggle" aria-label="Toggle theme" class="icon-btn">🌗</button>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card actions-page">
+      <h2>Emergency Actions</h2>
+      <p class="lead">Tap a service to call immediately. Use the large buttons for one-hand use.</p>
+      <div class="actions-grid large">
+        <div class="action-item">
+          <a class="emergency-btn ambulance" href="tel:108"><i class="fas fa-ambulance fa-2x"></i><span>Ambulance</span><small>108</small></a>
+          <button class="show-on-map" data-type="hospital">Show on Map</button>
+        </div>
+        <div class="action-item">
+          <a class="emergency-btn fire" href="tel:101"><i class="fas fa-fire fa-2x"></i><span>Fire</span><small>101</small></a>
+          <button class="show-on-map" data-type="fire">Show on Map</button>
+        </div>
+        <div class="action-item">
+          <a class="emergency-btn police" href="tel:100"><i class="fas fa-shield-alt fa-2x"></i><span>Police</span><small>100</small></a>
+          <button class="show-on-map" data-type="police">Show on Map</button>
+        </div>
+        <div class="action-item">
+          <a class="emergency-btn mechanic" href="tel:+912345678900"><i class="fas fa-tools fa-2x"></i><span>Mechanic</span><small>Roadside</small></a>
+          <button class="show-on-map" data-type="mechanic">Show on Map</button>
+        </div>
+      </div>
+      <div class="bulk-actions">
+        <button id="call-all" class="primary">Call All Services</button>
+        <button id="locate-me" class="secondary">Locate Me & Share</button>
+      </div>
+      <div id="alert-banner" class="alert hidden" role="status"></div>
+      <div class="log"><h3>Local Log</h3><ul id="action-log"></ul></div>
+    </section>
+  </main>
+  <script src="script.js" defer></script>
+  <script src="profile-manager.js" defer></script>
+  <script src="chatbot-ai.js" defer></script>
+  <script src="maps-integration.js" defer></script>
+  <script>
+    document.querySelectorAll('.show-on-map').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        if(window.EmergencyMap && typeof window.EmergencyMap.showNearbyService === 'function'){
+          window.EmergencyMap.showNearbyService(type);
+          window.location.href = '/map.html'; // navigate to map
+        }
+      });
+    });
+  </script>
+</body>
+</html>

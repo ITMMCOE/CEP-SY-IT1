@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Map — Emergency Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=dev-20251028-2">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="logo">🗺️</div><h1>Map</h1></div>
+    <nav class="main-nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/actions.html">Actions</a><a href="/profile.html">Profile</a><a href="/chat.html">Chat</a></nav>
+    <div class="top-actions">
+      <button id="install-btn" class="icon-btn hidden" aria-label="Install app">⬇️</button>
+      <button id="theme-toggle" aria-label="Toggle theme" class="icon-btn">🌗</button>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card">
+      <h2>Nearby Services</h2>
+      <div class="map-controls">
+        <button id="locate-me" style="background: #10b981; color: white; font-weight: 600;">📍 Locate Me</button>
+        <label>Filter:
+          <select id="map-filter">
+            <option value="all">All Services</option>
+            <option value="hospital">🏥 Hospitals</option>
+            <option value="police">👮 Police Stations</option>
+            <option value="fire">🚒 Fire Stations</option>
+            <option value="mechanic">🔧 Mechanics</option>
+          </select>
+        </label>
+        <button id="show-karvenagar">📍 Show Karvenagar</button>
+      </div>
+      <div id="map" style="height:520px"></div>
+    </section>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="maps-integration.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>

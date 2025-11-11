@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Assistant — Emergency Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=dev-20251028-2">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="logo">💬</div><h1>Assistant</h1></div>
+    <nav class="main-nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/actions.html">Actions</a><a href="/map.html">Map</a><a href="/profile.html">Profile</a></nav>
+    <div class="top-actions">
+      <button id="install-btn" class="icon-btn hidden" aria-label="Install app">⬇️</button>
+      <button id="theme-toggle" aria-label="Toggle theme" class="icon-btn">🌗</button>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card chat-page">
+      <h2>Emergency Assistant</h2>
+      <div class="chat-panel" style="position:static;max-width:650px">
+        <ul id="chat-messages" class="messages" role="log"></ul>
+        <div class="chat-input">
+          <input id="chat-input-field" placeholder="Describe the problem or choose a quick action" aria-label="Type a message" />
+          <button id="chat-send">Send</button>
+        </div>
+      </div>
+      <div class="chat-controls"><button id="chat-clear">Clear</button></div>
+    </section>
+  </main>
+  <script src="chatbot-ai.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>

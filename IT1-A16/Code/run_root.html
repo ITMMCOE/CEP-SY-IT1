@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <meta name="theme-color" content="#1f2937" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Emergency Services — PWA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b1f6b6.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css?v=dev-20251028-2">
+  <meta name="description" content="Emergency Services PWA — one-tap calls, maps, chatbot, and offline support">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🚑</div>
+      <h1>Emergency Services</h1>
+    </div>
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/actions.html" class="nav-link">Actions</a>
+      <a href="/map.html" class="nav-link">Map</a>
+      <a href="/profile.html" class="nav-link">Profile</a>
+      <a href="/chat.html" class="nav-link">Chat</a>
+      <a href="/about.html" class="nav-link">About</a>
+    </nav>
+    <div class="top-actions">
+      <div id="ai-status" class="status">AI: <span>off</span></div>
+      <button id="install-btn" class="icon-btn hidden" aria-label="Install app">⬇️</button>
+      <button id="theme-toggle" aria-label="Toggle theme" class="icon-btn">🌗</button>
+    </div>
+  </header>
+
+  <main class="container dashboard">
+    <section class="hero card">
+      <h2>Welcome</h2>
+      <p class="lead">Access emergency actions, your medical profile, a rule-based assistant, and a map of nearby services.</p>
+      <div class="quick-stats">
+        <div><strong id="stat-logs">0</strong><small>Actions logged</small></div>
+        <div><strong id="stat-contacts">0</strong><small>Emergency contacts</small></div>
+        <div><strong id="stat-ai">Off</strong><small>AI monitoring</small></div>
+      </div>
+    </section>
+
+    <section class="tiles card">
+      <a class="tile" href="/actions.html"><div class="tile-icon">🚨</div><h3>One-Tap Actions</h3><p>Ambulance, Fire, Police & Mechanic</p></a>
+      <a class="tile" href="/map.html"><div class="tile-icon">🗺️</div><h3>Map</h3><p>Locate nearest hospitals and services</p></a>
+      <a class="tile" href="/chat.html"><div class="tile-icon">💬</div><h3>Assistant</h3><p>Rule-based first-aid chatbot</p></a>
+      <a class="tile" href="/profile.html"><div class="tile-icon">🩺</div><h3>Profile</h3><p>Medical info & emergency contacts</p></a>
+      <a class="tile" href="/about.html"><div class="tile-icon">ℹ️</div><h3>About</h3><p>Privacy, install, & help</p></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>Offline-capable • Local data only • Demo purposes</small>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js" defer></script>
+  <script src="profile-manager.js" defer></script>
+  <script src="maps-integration.js" defer></script>
+  <script src="chatbot-ai.js" defer></script>
+</body>
+</html>
