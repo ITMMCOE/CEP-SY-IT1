@@ -2,6 +2,7 @@
 🌸 Prerana
 A smart women safety application designed to provide real-time location tracking, emergency alerts, and quick access to nearby safe zones — empowering women to stay safe anytime, anywhere.
 ________________________________________
+
 🚩 Problem Statement
 Women’s safety continues to be a major concern across cities and rural areas.
 In emergencies like harassment, stalking, or medical distress, women often struggle to reach out for help instantly.
@@ -12,12 +13,14 @@ Challenges identified:
 •	Delayed response time due to manual communication.
 There is a strong need for a smart, reliable, and user-friendly safety companion that enables quick emergency alerts, real-time tracking, and instant access to help.
 ________________________________________
+
 🎯 Objectives
 •	Enable women to send instant SOS alerts to trusted contacts and authorities.
 •	Provide real-time GPS tracking for location sharing and monitoring.
 •	Offer one-tap access to emergency helplines and nearby police stations.
 •	Promote community-based support and awareness for women’s safety.
 •	Build a digital safety ecosystem that is fast, secure, and easy to use.
+
 ________________________________________
 💡 Proposed Solution
 Prerana is a women safety mobile/web app that ensures immediate assistance in emergency situations through intelligent features such as live tracking, SOS alerts, and safe zone mapping.
@@ -37,6 +40,7 @@ APIs	Google Maps API, Twilio / Fast2SMS API
 Version Control	Git & GitHub
 Hosting	GitHub Pages / Firebase Hosting / Render
 
+
 🧾 Project Summary
 Field	Details
 Project Type	Social Impact / Safety & Security
@@ -47,7 +51,9 @@ Academic Year	2025–26
 Guide / Mentor	Mrs. S.Y.Joshi
 🚀 Live Website
 👉 Click here to explore Prerana (link will be added after deployment)
+
 ________________________________________
+
 💡 Features Overview
 Feature	Description
 📸 SOS Alert	Sends instant emergency messages with GPS coordinates.
@@ -56,6 +62,7 @@ Feature	Description
 🧭 Safe Zones	Detects nearby police stations, hospitals, or shelters.
 🗣️ Voice Command	Activates alert mode hands-free.
 👩‍🤝‍👩 Community Support	Nearby users can assist in emergencies.
+
 ________________________________________
 👩‍💻 Team Members
 Name	Roll No
