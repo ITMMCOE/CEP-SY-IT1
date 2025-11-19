@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nandurbar Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 50, 0.6), rgba(0, 0, 80, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/b/b0/Nandurbar_City.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 14s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Nandurbar Tourism</h1>
+    <p>The Land of Hills, Rivers, and Tribal Culture 🌄🌿</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Nandurbar, located in northwestern Maharashtra, is a beautiful district known for its natural scenery, 
+      tribal heritage, and proximity to the Satpura ranges. It offers a perfect blend of culture, hills, and rivers.
+    </p>
+    <div class="image-section">
+      <img src="https://divyamarathi.bhaskar.com/local/maharashtra/jalgaon/nandurbar/news/this-is-your-nandurbar-city-look-what-it-looks-like-with-a-drone-camera-citizens-of-all-religions-live-here-in-good-spirits-129677551.html" alt="Nandurbar City" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🏞️ Toranmal Hill Station</li>
+      <li>🌊 Unapdev Hot Water Spring</li>
+      <li>🛕 Prakasha Temple (Dakshin Kashi)</li>
+      <li>🌅 Asthamba Hill</li>
+      <li>🏕️ Dhadgaon Tribal Region</li>
+    </ul>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Toranmal Lake Nandurbar" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Nandurbar</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Nearest airport is Surat Airport (150 km away).</p>
+      <p><strong>🚆 By Train:</strong> Nandurbar Railway Station connects to Mumbai, Surat, and Jalgaon.</p>
+      <p><strong>🚌 By Road:</strong> Well connected by NH-6 and NH-52 to major cities in Maharashtra and Gujarat.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Nandurbar_in_Maharashtra_%28India%29.svg" alt="Nandurbar Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [300, 150, 280, 500, 750],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: October to March.</li>
+      <li>Visit Toranmal Hill during monsoon for lush greenery.</li>
+      <li>Respect tribal customs and traditions during visits.</li>
+      <li>Carry light woolens in winter for hill areas.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Nandurbar Tourism 💛</p>
+  </footer>
+
+</body>
+</html>

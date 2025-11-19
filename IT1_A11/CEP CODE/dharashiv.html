@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dharashiv (Osmanabad) Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 40, 0.6), rgba(0, 0, 80, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/2/2b/Dharashiv_Caves.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 14s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Dharashiv (Osmanabad) Tourism</h1>
+    <p>The Land of Ancient Caves and Temples 🕉️</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Dharashiv, officially known as Osmanabad, is one of the historical districts of Maharashtra.
+      It is famous for its beautiful rock-cut caves, ancient temples, and cultural significance.
+      The Dharashiv Caves, dating back to the 6th century, are a major attraction for tourists and history lovers.
+    </p>
+    <div class="image-section">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz447F7_ytiyJJWLDhOF7p0sZ5mUzxqE2I5Q&s" alt="Dharashiv Caves" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🕍 Dharashiv Caves</li>
+      <li>🏞️ Ter Temple Complex</li>
+      <li>🛕 Tulja Bhavani Temple (nearby Tuljapur)</li>
+      <li>🌊 Yedshi Ramling Wildlife Sanctuary</li>
+      <li>🏰 Naldurg Fort</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://beag.in/wp-content/uploads/2024/11/IMG_20230701_103157_copy-right.jpg" alt="Naldurg Fort" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Dharashiv</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Nearest airport is Solapur Airport (around 70 km away).</p>
+      <p><strong>🚆 By Train:</strong> Osmanabad Railway Station is well connected to Pune and Hyderabad.</p>
+      <p><strong>🚌 By Road:</strong> Dharashiv is well-connected by road to Solapur, Latur, and Beed.</p>
+      <img src="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" alt="Dharashiv Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [500, 250, 400, 700, 850],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: { legend: { labels: { color: 'white' } } },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: November to February.</li>
+      <li>Carry light cotton clothes during summer and warm clothes in winter.</li>
+      <li>Explore the Dharashiv Caves early morning to avoid crowds.</li>
+      <li>Try local cuisine and visit nearby Tuljapur Temple for blessings.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Dharashiv Tourism 💛</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dhule Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 50, 0.6), rgba(0, 0, 80, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/f/f3/Dhule_City_View.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 12s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Dhule Tourism</h1>
+    <p>The Gateway to Khandesh — Land of Culture & Progress 🌾🏞️</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Dhule is a historic city located in northwestern Maharashtra, often called the “Gateway to Khandesh.” 
+      Surrounded by the Satpura Hills and the Tapi River, Dhule is known for its cultural heritage, temples, and agricultural importance.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Dhule City" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🌊 Aner Dam</li>
+      <li>🛕 Ekvira Devi Temple</li>
+      <li>🏞️ Toranmal Hill Station (nearby)</li>
+      <li>🏰 Songir Fort</li>
+      <li>🌅 Tapi River Viewpoint</li>
+    </ul>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTExMVFhUWGBgZFhgXFhgYGhgXFhcXFxgYHhgfHyggGBolHhoXITEiJSkrLi4uGB8zODMtNygtLisBCgoKDg0OGhAQGy0fHR0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLTctLf/AABEIAJ8BPgMBIgACEQEDEQH/xAAbAAACAwEBAQAAAAAAAAAAAAADBAECBQAGB//EADsQAAECBAQDBQgCAgIBBQEAAAECEQADITEEEkFRYXGBBSKRofAGEzJCscHR4RTxUmIjkkNyc4KiwjP/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAQIDBAX/xAAgEQEBAQADAAMBAAMAAAAAAAAAARECEiExQVEDE2Fx/9oADAMBAAIRAxEAPwD7UIl4oDEvGkXeOeKPHPAEBjnijxzwF3jnijxLwFnjnijxzxBd4l4G8dmgCPHPA3js0FXeOeKZoh4C7xDxR454CzxDxV4h4CxMQ8VeIKoCxMVeIJiCYokmIJirxBMEWJipMQTFSYCxMUJiCYqTFEkxUmIJipMESTFSYgmIJgOJipMQTFSYokmKkxBMVJgOUYGYsTFCYo9EDEvAnic0YBHjnijxzwUR454G8S8Bd454o8c8Bd4l4G8c8QXeOeKPHPAXeOeKPHPBV3iHimaOzQFnjnijxDwF3iCYTxvaMuUO+sDhr4RiK9sJWZghfNrxm8pGpxtemeFu0cxlLCCyykhJ2UQyT4tGdL9o5Buojmk/YGLTe3ZDfGeiFn/8w7T9Ot/Gol2DkE6kBnPKrRzxmjtqSf8AyDq4+sTiMZLVLV/yAOCHCgCHDU4xZyiWVoExUmMbGe0GHlAd8HQAVjJl+2iCs91WTSlQ1+YMO0THriYqVRlp7ekEP7zyV+IGv2hkD5//AKn8Q7T9XrfxrFUVJjFPtJJdu827QVPbkk/N5GHfj+nS/jUKoEmekkgFykseBvGD2v7SpltkGdwpzUMQzac4D2b7RyAllHKSf8b0BckXLk1i9omV6QqipVGRP9osOkVX4JV+IHJ9pMOqyz1Sr8Re0TG0VRQqhAdryj8/kfxAMZ25JlhySqrd0Of6i6Y1CqIJjPl9rSiHzpHAlj4QjjPafDy7qJPAfcxNhjcJihMeake2mHUe8FJG5DjyrDU32ikioLjlDtCS34e4zR2aM3+cN4j+cN41jOtTNE5oyf50QcdDDWvmjs8Y/wDNO0Cndp5ee0TDW7nhdPaMskpzhwWrTztHl5+OWq6jyBYQqTF6rr3PvRuIn3gjw8Fl4labKI608InU17L3ojveiPMSu1FfN4j8RZHab7iHU16MzhEKnhxWPOK7TG+sWVja3hhr0P8AIEV/kjePOqxlmMJdq49QkTC7HKRWlTQHzhkWaze0PaqZMVmz+6QCWSC5Z2D7lvCIT7QTQmkxYHOPJYeaFEBVWokAOwJdXN79IFjMXm1yhmAY2rpvZ6R5b2eqY3Z/aZUp1F31VXzgau0mtGL2WfeEgl8o2uSHZxtTTWNpeDQK8C/Nto42ZXSXwbD9pvdPk0MJ7VQC2vCMYoINj6LfaKiYlyCLU67cYo9B71CquRFhwIMYsibol+rU/MNJBF/X4iWLKeWs6pHkYBOPBj4wH+Sdy0Xl4gGhjn8LmlkYghWUkF7XvtFvdL5+t4YUgEgsH00h3Cf7gDqI0mMYSmLufGggSZ53IL8S8ava5U4CaDgNd3jEmYWYHYPyNaw1my/R+TOUqyn6RcpN6QDAhSKLD8SK6eUP5+ENWQAzCQ1ecLfwiPhV4j8Q+VwP3id6xdS8ZVUe8AYnN1IDbxITV2L8D+YjNtEOr0YvanWDLZnrGbiMKlSnUhXifsYdfdUcG/yhOVLxlZZwqNUFuZiFTUDusKaXaNSZLBDE+cA/gi4yxe7PR7Az4hOIjLE4bDxi6pwtSPoa8OxoHG6AiLpxB3HFoyEyDd45KQO9nccILK014wO2aB5wfmEJqWlszRRU8sG7o3gunysbxIUOP0jMUtVGW77Ki4UsbE7g+URTqlgcOsQZ4HI63jMmBWunjWsEllLCutuGo4RQ1OxFWo24jvfgDT7QviVAVQk5YUE9YNB/VniSlnrUTia26gPFxjAHFebfp4z5mL505/mADE1cnnSteETRrpUdcouxfW/SM/2kUlMmk0KUopdIcje73cRKZkvTNU95wGannGZ7VYhDply1uPjYgd2gGnM0YGM8q3xjCnAAFuVTd6fc+ELGYU94fK5pUPSleNehgmISctXFeNt/pAZijlNHBY0DnN3gACzh6mhHVg3J1Hl/CSxUSpsmV3PAC1K/eCFZUQcoqR8KFiwqH0eoNdztC8tTEXGhASAxDkpBZ9q635aE3GTEFORSgDle7aOGLAACFVEozEigWpr5SprMKjiQS3G8BTIINQRmNSaOR/8AFg76nUDSpZ3ay0qICirm5epZtYMe1qP7tJL6KL1FyXjPyo+FzAFQP2sf7jQ5/StYyU9upCqBQB2ytye8aqAVFRBNRuCGbcXjneP61KWC0qzKdQALVGXyYHrFpckEUJc2hlKCBQKUf9SA1a3LsOLncwNeFzOCojb9iJy4yrLUSULSWuI0cOdWverf3CGGwipanukirKL7i9DoL7xpe8Sm7jxiZi6lfItqHpAlSbkfmJXPLOjKWuDdun32isqbmDsx+kL74m4AQ2/WJbpB1h6EPxeB/wAcXtwjN42NzlKBMlwIpNoZybRSajjEUvkGp84jKP8AI+ENpTS8cZKTf6RZYyUEvi/SI90dPMQ6ZSYqqWmHhpJRL/qOCTxhpwLCLCdwh4Kk13iZ4KlgISouOdfCLpngGiiAPPpE5wllE1uC3G2x6x9K18/DOGwxJCCkgkfM/wBA7ROQyzlUAHNnBMIzO0lF6uVM5zgWtESpyTQPnNTlDpHOjwXD2KlKTU5a6D7vSAglTAuRsN+j8IopBSMomJLmgJyjzIrFsPMCAzl9Q2vLlE1cFThmLd0PfvAtpaz8IvjSlIcKfQmo8auD4bQDFrFCClLX7yR3jqzhoCJlAMuc7uptKBzzrE1cOTCkSyQ6iyWor5tBvcBngM5JCQQjQmgWDTcK5aCJwK1upQFCwYBxa1T3Xp6sTGzCkVQoBqFga6Gvg1KRNXAsYF90JBUWrc18ARCysS1CP/VcdKMYvKnIUkgk5mdwlAfg1W6bnYQx2XIkzEpzpc0DGYoAuoh8qQ703blBLGf70lzoKGtWNrgnrDBlhIoog7kA/QR6PD4TDsfdy0EpBHeSdHuSHNr1jG9oZaMyFAJCbZQO6ddtbch0hpCC8XldSlFhb4Q9KV6iEcA+V3JAqToS5f8AEDx//KtIZKKF2IANRQJ0MR2hiilGRAUBuRc6kxx/pyt8jtwk+SvaU8Lc5eCQDbpv8Wh0oKGAzCSQlGVQeqQl0kMwcPd2PU8YonElm52FLAa73gJxBdkpY961GanxE92iWAdqwni0QhOcPdwAB3TQtmIvUknoOMPzWYMQLWfp1P2hHDSKhZNHKR33IKe9VJALG/WNdCU0ctlBJqxBH3/EOVJCBlhQzEBrBxfysfTQkZdc3yAXYaUAAq5fpQw3i0d13swI4EgeqwjMmEHhUtoOV2vCBpGLCFy05E94skhKQRxNK0PD7Q4v2gUFd0d12q17MAAH614xkBC1LQopYBy2YFwEkknj++EM9mdlLXlWpSAmh7xDlLXAH3a4hRtTu28kvMUhJV8O54m558xE4PtMrLlbWJBAygC9aVPrSPNdu4tPvGWkuAAMqnptlLEnU84Pg8EqYJYAISAFZiXLjRrBn3+gaZDXpcX2xKlEE2OqSHSaaXYvfnCkv2mlu2RTbgpfoN/zCuI9nSpKiJwUuhCACz2PeqBToIyJkvL3VUUHdJSS3Q0I4+hOvFdr1Y7ZlsFCYkDVLMrlvv4xqdnTgtCV5UgqexIapDl4+fYZJUphq7eN2j2fYM4+5QFUIdv+xPSJyhGqpBGjdYjMbEDxN4tKmZgC4G4LjzZwfCImBi2mmpfd3tGfnyruF8ThiC70iqFBmhvMCGVb6b6QvMkIul/GOdmNy6oqWIGsMYEJh2LPBQoGMNBrmNAzNvBDJq4gRlEGGJqAveKrmNyiykte/wDUVy1ig0qYPd5kgZmuHzUevAUHnC38twCQCa3A9E84zZmIbuhRI4m8PdmT3SfhfbKD9I+j2eKensLgVrTmyISlnfIkuH5V6tFcXIGU5SokMfhSEsHBII5UjgsqQE5agmpOXyFfKMrtaYUi44gKzHmYna6WYdT3iCxPi8ElskgqnVPyAKJ2DvaMjs3FHVRHIO8aY92r5CQ987Fyzk90GnGFpIbw5lIUzpChWqlDyy5aj/YecVmKSqkoI41oKu9Sz+mjpkpJSTlatBTvM1aQphpZrmIqGHfbKeSRXqekNXHT8UpHzZiTop7cdYAjtJQBDCrXYsdCxfT6wXFYMJSElswu5U+9mFOJiMP2P3XUhebQJBYDQkl6eEKZTEkZ05s4S7ghmNOA/EVXgSldZooXtfVqEejFJQSkskPqTSnHcguBBih6gHw/UCmu0MZOnFCQoAG90pPNyenOE8XLKRlK3IrYkai4fc+NYWlzwCClbFmYqYMC9NYtOxTAMBsMrk0Zy99vKM25WpNITF5CkK1JqwNCKjh9aNrF1z0qDuG/2Uxs/hasDxEslswXnYuWZg7AMRs3jFezexVLoSculvC29fCOdsza6SfUDmyWPzKFWCbAsK2L2HomBTMOt0lQFCSKM2j87mN/C9lkKLEkCj8Ht+4NOkoNCag+UYv9I1OFeTwSzLWO7mDgs9y2UnjQ3LtGt77O6koNGyhwCbCwL2c6m0D7Vw6QrMm4O3EW2hxTKBQBlLUYspW93Y3I1tF7b6ZjPTlUKUqAx0Jchq8Dp+1sdgaABVy1tTW/q8EVJWl8ubvKN0GtH+ZNWBvzbWMpZnJKWmUYKABziz/EXfodYqeHMLilqV3qMFEkA6JILdY1ZWZ3yEBzlLCoSEgtqK5mPCEux5HfyqLFWcAEO6g6/sfAxvzMTMcgIzJDJSaOSKNbd9Yuoxu0gkrAzJbKHGgAJyuAb1NCKPaD9k41MqYlMz4Cm4BcagkaBiqt/CNRExKkkTUqKkhqpIYHUA1a1RtGVj5RJDJYXLsQqwc703/vN5etSPUq7Uw6QFe8BGqX75GhCbtGH7TY/DzFJWwdNio1Y1qAbagcTGajBhCe8xq7WqBU8amoOiYGqQHBnAgM40Kh3WU1O6yhXiI1LEquBkLmr/4pZUzd4JypD7lm0Or+UeimoXIKUK1A6iop1EAmTwgBKUAgAd0KUkMaUYvyLUeOl4fOSQlSbEpWSQ1fhJq1r7xLx+zT2HmFRcacvuaxoYcK/sfuMxCAKJJo2gMHlJUHLmt7jysIz8h4y92I6dYNLSGDGm0Ion3cHy28YstTDfq0M0MYiQFPYctfTRkz8OtJBanNn8+cO+8MSiaLH8f3GLw/GpyI/wAmvSD5gRAcVhBdN9t4QGIUlQDN6rGMaac0awPNvAk4txpTjBypLU6wHl0AqUM4IS9WDQ7h5wQo5SrK1KAOdiWgc3EOaeDRaTiS4FI9t5PJJjXlzUKFVDkRxNG3/MLYqXKCQpKUqJ0IJaj1HltDkgpNGBNHof6ihxiEhkhyKMKcKmMtsxSyzkAdAPAC8FwWHCx3iw3Ic9EgxbFIUSFKUkCndFupDwUY3ukAywGsMz8r3hqGF4UZQEKUUgl+6oMOANBreFcZgFUyZlAhySKAUq4BA6xQiYkd5KwOrfv9QliphAdmqWcirbNGrJ8s6cxc0y0FlEk/EWIB62I6wFCMQoFpU4j/ANtZblSM+Vju8KAtUElq87xoIxJ3Um/wzj42OvHWMf7WetHsWWoZgrPLOrK7yyL0TlYB7E04wHFY4qJljPdnJJJGtCWGuphObiVJBBJOYbnehL9dH6NCcjGZTYA8NOpeHLni+NCdLCAEi3ME9TbwgU1Qopg2zgAkMdb3tARiiq/6aAqQZiCEh8qn0HA/npHPjbb66TM8GxGIXMIyqIbhpoXFD4w92YpZZKAQAQ5OwH6tApCEooEt0Nel28jBZnaOUgVtrvZ4nO+ZI3xnutPFYgpSyWcH7/iMHE4gkg68dSPRggmktMUaEUHDQwKZLSoudqfRvXCOMmOlWBJS5Bdr3vX08RgE5SAVZndiwJdT1uAwszRbEJIBUQEtVy9E1DnYf0IUw2K95MCBTKWffU7ajnHbjMc7WpicEsoI96STXMzME1pta762jHPYaic61hO5dyWLEv8AvpHqpdRWtGYs1b0hFeFQzZWZJS1BRybC178dYTkWAdl9mJlOpLMaJBskuxrpGkqaEIZYoGqASHFACu22vEwvKlJAQgJNVOz1cOrU7gQacCoEEAGoYDM4sxdnfmI1xZq6MVKcmylVNKnYv4wtkzpJHdrRhYOCBpuPCM+YVLPdmh0nvUAck1oORDP8sPYBRAUDUv3QNH03pSJzn2vGh4zDpHeWMxAITR6lmppprwqKRmYxEzETUguMqQXdQeoPiKH/ALXpGxMRmZ28NdxAUn3eYuSXs9AkD5edVdRE4VeUXw+EHzDvJCUkuNBavlDisqQ5DNa1ecVwOYpBUCCqrN8I2J3t1o0RPULEcTwH1/p46sDS1LWaoQz3t5aGDLlkd410N/20JpUKEfDzagoBQuOsPCYlSdiKOT43LxzvjUWlgkVBYW71ePSCIApWux6+mhYKZwnKQwoHTts7wNMwJegDCpZ/IcPrE9DapT08GH9NFJiOBpanoQGVigskpctoFMW3r1pSGclM1QdXrz4EcYsqB+7HIXNaDziszDoV8LvrevjEl7EeEWSSDu3D00LNWXGZiMHkOv5geYg6jh6Mba5oLA9a+cK4nClXw19fWOdmNy6zsXIUGGRCBoyQbca+cZ2HmJQczZld4NxdgX5bbwSYVlPfUQnUqJNYawkiQkVmp5X+kep5i6FqsVJSCA+ZbUFBxh7DTpaBRjxTLWrzYRBxkofCsHZkqvzMIYzGzVt3sqRUMKnxenCIbhvGzzMobbqSocGufC/DWBnASsmYBuee2p+J+TxmJmI1TmrdRP2aJmFJqAB684naRndNTxIslClFmzFSg2tn3MIjBEqZNE7mvkL8oKCWDWiyH1LD1SMf5OSyafwfZ8lFXzKu5YBzsBQRy5S1P3UoAupWrbUc+DRfDUFnPT7wtjppIIFTYczTrE95OnWZ6AqUpqE3cA6nlvWEpkkl6F+X7+0achJSkE3ar32frCs2Ya3H3rGb4dYVwk0MSb2bejk8mIh7soZJPvV2KiyWBKgaA33fy3EKZAkFTPUPR9aebRoSseQHU1NRrwbb00b4zxQZq5mRkSVOVFg1SGPfJ0HW7QNOImCs1kVsBW1al4TxGIV/45qk8O8W8rU84y1zCDmVNUpWpJLE6U4RvrsNbkzGACtsrc6u43iJGOCywIASG1fV2Avy4R5/E41Rsb1LDoz8PvGt2Bg15FLsFfASam7kVtT8ccX+cxqc/TvaGEKwEklgXKiHOtON2hTs5KkzFmjpOpvcgtq8Cx/ay0qUlBKWJBLlzpfaFET1hRW7nUku463uIs41LymvcSMRSv1Bc33vC2MxfDn424c+EZ2CmqUlglwKu7c+t6fSB4mep6Jc1DOAdT43jnnrf03pEwJJWXbKzgUDqIc7bQUyypOdJUwcE5nsxrdLtpRuUP8AYs6XLkpJmEGiVICc1SzlWg7xVSJx0qVML+8VUUbZnbKR3R0bxjpPHNmzCurKqaOWKbC4BzB3NGo3J8vs5CwVJUWKSamr7EF6uDqx00hzG9npUhaBOUE5SP8A+YyszNmoAOANuUJ+z+HIlimVmBD1D8Cbu+mzxOV8WfLUCQRZnew50frFpuHeorlvUG3AaXhmTKapzjZgPR5wdKcpo19ePjHL/joxsehZSliEkkagHW1y1i4rRNqQKTg5xq7voVECjXO9w9acoexkxYr7ssNg7mws5HQR2Cn5kkqC0szulQAdqkvXbS4jvLXKqYaSQCFAhQU1SVaBu8Hza+qQxYt4W/u+7R2LlsAtwQXADu7kVZ3DNAEzCl7EXoQQwpQH6fuM2+r9GESRU2etD6JhhOUi70ua+FGhKXMSqhD7g083aCyl5u6xHP8ANvCFBkTkhVMtfTwcrSagGmv9/wBQlMS1wevPwiyVilOda+usTAytTv3fL67RUgmzfT6xWZO1CVb0uW0iiZrgKYhxY0I4GkUEKohJ8PXAxQFJFD+/CJTw84qMLE5pzoAItqNKuzxkLweVwo5uVvGCYeYdHL3FQL2O/wC4P/HUXJIHR6eMa2uN9IiZl+EeA9GKnMqtYHjl5T8Tx2HmLVRv30hn2mGsmUKzLOlurjjpEYKRMmk5Qw3IYcuPKNLAdnWXN/66dd40xM2AbyEZvJ148P0gMAkCrktegEJylFE1viDOKChNG+rczsI08VPHwu6iDXYcBC6UjQdYy34vNxJFLct4SmpDgmtW2B4fuGZhenhxiV4WylaacYuyQzUy1BKBTrrCyiHYvYnofpr4QWbsIWZ2Njry/Mct1q+LE5kgC1aXB4xlYiblBeoB8hrwrGo6Uu1X3pz6/mMftqSQQDapPg/3jr/P5Z5fDOxGIpSjwkqbDOLTQN6pCCi0d45CKIL/ANR7af2ozBnABFb1YMKmlNeItHkOx5eaYCbJ73UW82jXxDM7u/h9W8YzyagWIqrOA1QS/wDlc3uH14+B5jq/5CAKUDuSfPbz4VWFHuQLitLtXTSKoB+Lidatyu0Q1o4DETZROVagk0NVCvKxvGz2epU2Y6ksVFLsBXIzuNyFcPtHn0zxmoGJ1Om9I9PgkZE+8cnLKHRcwktzHe8BGb8t74aw81ClrFT3vlzOGzB3FqbvQCwgyjmSySnNQEEuxIBIKaj6fSE8JPXLcJyOAnMF7pB57NztqYb94ooGZIejpBuqyhqAG1rzrFZWxgWjMoGmWqQQxZ6lNADc0D2rFeypmYEqyuXBYEcN4z5i5ilKTmSwsCovlegbXWtats0V7KVME5ZUVEfCnMbgHhbSMc541xbExwzk8g4BIq3G/lBZWJCixvo2nCBT0KCWJvo9Lj00Bm4cFAox0ar1BqDVm2+kZ441WoZh0f11iES9Qb0LnfmaN97xlyQkFlK7w408rG9IYlFejEB6uT9I6sB4jsmWpWcDKr/QliwspNQQb7iFs4SDmcEXGVz4Q6JpuD1AB8wKQGdh1AO4epr4sVaa3icppKEgipSRyNByesEE0AVBSTxcU4j62iJM1QuwbehGv2gc4E1IJFaUY8x4xz2tYbCVEXd99ONDFUrYgEsrn9N4XQQxyqAGz5vp9I5cglORyQ7gap3re8aiHJalUeu9g9b6QZ8oLCnEU/UKCc4Fn17rf1BkrZmLcL+cAZSAatl6nxYj1wgBJ2f6xdM+rMG5efox0w6hJG+0Ijx2dSLNW9/zAkTZhJctBUpjQwskXYV1uYrnxhST2WT3lGuwZ/xGjhUBIokPxO+5i5RTYRWWjc8thFbzBSo6l4j3sCmGoEVKwKRLZFI4hRM1yaJoIdlTAaAWjhIS5URU6wSVIGjAmvT7Ri8tWSiSUVJudNomY5t4wdBYeusI4nEbcRya8Y5fLc8VnzEi19YzZ0xjer87wVU5w+5bnvA0SX9eXCEjF9Vkku+xqDqPu0ExSEzQwLFwxLOPT7/mJ903r01oogpAcBkgpCm0Ua0HAN/cdeFLMYna3ZS0hgQWUQ4eoZ34G4jHGDUSQbiPbYmYCMy6tmfmnMHjBwi0qmLWztbpQ/SN8eVZvGJ7LwhQlSjTMwrsHJ+0M50kilNDvDE2dRiKUNtDWFRiUg2+GzeJ9NFQfD44y0LRQpUSG2JSQSdL5TWr2jOlEpUDpamrgiCzZoVdLOQS7F2LsRs4LjWOnYgKTQfEH8hrf+oAiZXvFJCQQpRSnqo09fiPZqlhKFJTR1DU2QGHJ2O1hHn+xkvMlqNAiup+EP8AX6RrYN/dP8y8zcMxZnenxJMZaL4aaoTczBie67DWhBoUaMb1fnvqk+8zLzZEn5WUUhqEE6k0NBpV6uhIw6QSWzLSnKxtsNeL+OsRgJ6srgOH7x+UaF0k126wQeVgCxZcsvfKkpJLjg7W1FoiThVf5JSDYOQN6BheCfzphKsktDJYqdwSS4uFbDbazNCKFzpllJzagOAKORUlwYB4qIIKgDo6XbbTXwHCCS5hCgCwSb1yqvsAx8Xro1c3DylgupYatGcbOaEsKUDX6xRXaQVWmysuYPVhcWJH0hg3VYeU4LkO+rAte4EJYjs8Zi01dvhOXIoeDHSp8oW/nJ7mZPxMUksQzsCw1fXyhjH9rykhMvvJWo8cqtMrgkgF0io8Ipp3DqCUBPeS1ixIc3t1qw6wRJyilQSa6HkS8ZQxiCUlUtIBHdUlSnYUrQUeGv5KPeIksShYZL6KRU5dgBy4QE4tObgR5jbga6whOmKuC2tS1rtp0jRxXZ0uYAJpzhPwuGZ9aMSbDaA9oYUJCTKU4HdUGYAu48nrwjNiwjLUCczBRe72PSLmex+G53oPLzDxUp8fw9fJosEEM73tTnyeCm1ocONR140H9xMqYGv5fQ7xnzpeVjmmBBsxdmLG5BbhwgspRUBXkeUMQ2SRqDrVgaahi7wVKuNdvCFpazqHoz2MFKg3wpPj+W00hR//2Q==" alt="Songir Fort Dhule" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Dhule</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Nearest airport is Nashik Airport (120 km away).</p>
+      <p><strong>🚆 By Train:</strong> Dhule Railway Station connects to Manmad, Jalgaon, and Mumbai.</p>
+      <p><strong>🚌 By Road:</strong> Dhule lies on the junction of NH-52 and NH-60, connecting major cities.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Dhule_in_Maharashtra_%28India%29.svg" alt="Dhule Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [400, 200, 350, 600, 800],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: October to February.</li>
+      <li>Try local delicacies from Khandesh cuisine.</li>
+      <li>Carry water and sun protection while exploring forts.</li>
+      <li>Visit nearby hill stations like Toranmal for scenic beauty.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Dhule Tourism💛</p>
+  </footer>
+
+</body>
+</html>

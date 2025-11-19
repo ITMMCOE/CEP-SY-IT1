@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sindhudurg Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 40, 0.6), rgba(0, 0, 60, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/d/d0/Sindhudurg_Fort_View.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 12s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Sindhudurg Tourism</h1>
+    <p>The Coastal Paradise of Maharashtra 🌊🏝️</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Sindhudurg district is located in the Konkan region of Maharashtra. It is known for its pristine beaches, 
+      historic forts, temples, waterfalls, and scenic coastal drives. The district is named after the 
+      famous Sindhudurg Fort built by Chhatrapati Shivaji Maharaj.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Sindhudurg Fort" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🏰 Sindhudurg Fort</li>
+      <li>🏖️ Tarkarli Beach</li>
+      <li>🌅 Devbag Beach</li>
+      <li>🐢 Malvan Marine Sanctuary</li>
+      <li>🌴 Vengurla Lighthouse</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://www.gosahin.com/go/p/f/t1/1543756460_Tarkarli-Beach1.jpg" alt="Tarkarli Beach" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Sindhudurg</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> The nearest airport is Chipi Airport (Malvan) and Goa Airport (130 km).</p>
+      <p><strong>🚆 By Train:</strong> Sindhudurg, Kudal, and Sawantwadi stations are on the Konkan Railway line.</p>
+      <p><strong>🚌 By Road:</strong> NH-66 connects Sindhudurg to Mumbai, Goa, and Pune.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Maharashtra_Sindhudurg_locator_map.svg" alt="Sindhudurg Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [700, 300, 550, 800, 1000],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: October to February.</li>
+      <li>Try water sports at Tarkarli and Devbag beaches.</li>
+      <li>Carry light cotton clothes and sunscreen.</li>
+      <li>Explore local seafood delicacies and Malvani cuisine.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Sindhudurg Tourism 💛</p>
+  </footer>
+
+</body>
+</html>

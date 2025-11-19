@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buldhana Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 40, 0.6), rgba(0, 0, 80, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/4/4a/Lonar_Crater_Lake_Buldhana.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 14s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Buldhana Tourism</h1>
+    <p>Home to the Mystical Lonar Crater Lake 🌋</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Buldhana, located in Maharashtra’s Vidarbha region, is famous for the Lonar Crater Lake —
+      one of the only meteorite impact lakes in basalt rock on Earth. It offers visitors
+      a combination of natural wonder, spirituality, and historical landmarks.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Lonar Lake" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🌋 Lonar Crater Lake</li>
+      <li>🛕 Gajanan Maharaj Temple, Shegaon</li>
+      <li>🏞️ Sindkhed Raja Fort</li>
+      <li>🌄 Anand Sagar</li>
+      <li>🏰 Dnyaneshwar Temple, Lonar</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9dQkp6HSWUKlkRtp5_8V6TzpoWu4fSB-o3uOPtssjsexSt2QhMUAE_EF1iqK6EtlMOH1epytvRPf_5MLbU7ocZiVIsI55zT1IH_kKQ0ZLJ0izBZib08VV2hmcmPh5cf7Mif4Y1eQR7Hc/s640/shegaon.JPG" alt="Gajanan Maharaj Temple" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Buldhana</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Nearest airport is Aurangabad (150 km).</p>
+      <p><strong>🚆 By Train:</strong> Shegaon is the nearest major railway station.</p>
+      <p><strong>🚌 By Road:</strong> Well-connected via NH-6 to Jalna, Akola, and Aurangabad.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Maharashtra_Buldhana_locator_map.svg" alt="Buldhana Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [500, 300, 450, 800, 950],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: { legend: { labels: { color: 'white' } } },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: October to March.</li>
+      <li>Carry comfortable shoes for visiting Lonar Crater.</li>
+      <li>Shegaon is a must-visit for spiritual travelers.</li>
+      <li>Try local food and buy souvenirs from Anand Sagar complex.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Buldhana Tourism 💛</p>
+  </footer>
+
+</body>
+</html>

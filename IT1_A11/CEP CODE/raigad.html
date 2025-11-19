@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raigad Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 40, 0.6), rgba(0, 0, 60, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/0/0f/Raigad_Fort_view_1.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* 🌟 Header */
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+
+    header p {
+      color: white;
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
+
+    /* 🔹 Navigation */
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    /* 🔙 Back Button */
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    /* 📦 Content */
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li {
+      margin: 8px 0;
+      line-height: 1.5em;
+    }
+
+    .image-section img {
+      width: 90%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover {
+      transform: scale(1.03);
+    }
+
+    /* 🛣️ Route */
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ✈️ Plane Animation */
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 12s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔙 Back Button -->
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Raigad Tourism</h1>
+    <p>The Land of Forts and Courage 🏰</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Raigad district is known for its historical importance and natural beauty. 
+      It was the capital of the Maratha Empire under Chhatrapati Shivaji Maharaj. 
+      Surrounded by mountains, forts, and sea, it’s a perfect blend of history and nature.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Raigad Fort" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🏰 Raigad Fort – The Capital of Chhatrapati Shivaji Maharaj</li>
+      <li>🏖️ Alibaug Beach</li>
+      <li>🌴 Murud-Janjira Fort</li>
+      <li>🌊 Kashid Beach</li>
+      <li>⛪ Revdanda Fort</li>
+    </ul>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Alibag Beach" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Raigad</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> The nearest airport is Mumbai (140 km away).</p>
+      <p><strong>🚆 By Train:</strong> Major stations are Mangaon, Mahad, and Roha on the Konkan Railway line.</p>
+      <p><strong>🚌 By Road:</strong> NH-66 connects Raigad to Mumbai, Pune, and Ratnagiri.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Maharashtra_Raigad_locator_map.svg" alt="Raigad Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [950, 400, 600, 850, 1200],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Visit Raigad Fort early morning to enjoy the scenic ropeway ride.</li>
+      <li>Carry water and trekking shoes for fort visits.</li>
+      <li>Best time to visit: October to February.</li>
+      <li>Try coastal cuisine and local seafood.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Raigad Tourism💛</p>
+  </footer>
+
+</body>
+</html>

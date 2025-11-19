@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mumbai City Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 40, 0.6), rgba(0, 0, 60, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/d/d6/Mumbai_Skyline_at_Night.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 {
+      font-size: 2.8em;
+      margin: 0;
+    }
+
+    header p {
+      color: white;
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li {
+      margin: 8px 0;
+      line-height: 1.5em;
+    }
+
+    .image-section {
+      text-align: center;
+    }
+
+    .image-section img {
+      width: 70%; /* 🔹 Smaller image size */
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+
+    .image-section img:hover {
+      transform: scale(1.03);
+    }
+
+    .route {
+      margin-top: 15px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .route img.map {
+      width: 70%; /* 🔹 Smaller map image */
+      border-radius: 10px;
+      opacity: 0.8;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    
+    
+
+    @keyframes glow {
+      from { box-shadow: 0 0 10px #ffcc00; }
+      to { box-shadow: 0 0 25px #ffffff; }
+    }
+
+    .plane {
+      position: absolute;
+      top: 55%;
+      left: -60px;
+      font-size: 2em;
+      animation: fly 18s linear infinite;
+      transform: rotate(10deg);
+    }
+
+    @keyframes fly {
+      from { left: -60px; top: 55%; }
+      to { left: 90%; top: 50%; }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+      .image-section img, .route img.map { width: 90%; }
+      .plane { font-size: 1.6em; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Mumbai City Tourism</h1>
+    <p>The City That Never Sleeps 🌃</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Mumbai, the heart of India’s economy, is a city where dreams come true.
+      From the charm of Marine Drive to the heritage of Gateway of India,
+      this city beautifully blends history, glamour, and modernity.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Gateway of India" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🌉 Marine Drive (Queen’s Necklace)</li>
+      <li>🕍 Gateway of India</li>
+      <li>🏰 Chhatrapati Shivaji Maharaj Terminus (UNESCO Site)</li>
+      <li>🏝️ Elephanta Caves</li>
+      <li>🛍️ Colaba Causeway Market</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://i.pinimg.com/1200x/14/de/9d/14de9dab25554e7e9fda5436a11f1294.jpg" alt="Marine Drive" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Mumbai</h2>
+    <p><strong>✈️ By Air:</strong> Chhatrapati Shivaji Maharaj International Airport connects Mumbai with all major global destinations.</p>
+    <p><strong>🚆 By Train:</strong> CSMT, Dadar, and Mumbai Central are major stations with frequent trains from across India.</p>
+    <p><strong>🚌 By Road:</strong> Mumbai is connected through National Highways NH 48, NH 66, and the Mumbai-Pune Expressway.</p>
+
+    <div class="route">
+      <img class="map" src="https://i.pinimg.com/1200x/85/f7/ad/85f7ade7b6203394a60e90fe3759ddc6.jpg" alt="Mumbai Route Map">
+      <div class="flight-path"></div>
+      <div class="plane">✈️</div>
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in millions)',
+            data: [13, 5, 8, 11, 15],
+            borderColor: '#ffcc00',
+            backgroundColor: 'rgba(255, 204, 0, 0.2)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Plan your travel early during monsoon to avoid delays.</li>
+      <li>Use metro and local trains to skip heavy traffic.</li>
+      <li>Try local dishes like Vada Pav, Misal Pav, and Bhel Puri.</li>
+      <li>Carry sunscreen and water when exploring outdoors.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Mumbai City Tourism💙</p>
+  </footer>
+
+</body>
+</html>

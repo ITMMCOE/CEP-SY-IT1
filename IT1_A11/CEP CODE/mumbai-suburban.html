@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mumbai Suburban Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 40, 0.6), rgba(0, 0, 60, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/1/10/Bandra_Worli_Sea_Link_Mumbai.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* 🌟 Header */
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+
+    header p {
+      color: white;
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
+
+    /* 🔹 Navigation */
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    /* 🔙 Back Button */
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    /* 📦 Content */
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li {
+      margin: 8px 0;
+      line-height: 1.5em;
+    }
+
+    .image-section img {
+      width: 90%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover {
+      transform: scale(1.03);
+    }
+
+    /* 🛣️ Route */
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ✈️ Plane Animation */
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 12s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔙 Back Button -->
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Mumbai Suburban Tourism</h1>
+    <p>The Vibrant Heart of Modern Mumbai 🌆</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      The Mumbai Suburban district covers the western and eastern suburbs of the city, featuring iconic landmarks, beaches, malls, and Bollywood film studios.
+      This area represents the energetic modern side of Mumbai.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Bandra Bandstand" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🌉 Bandra-Worli Sea Link</li>
+      <li>🏖️ Juhu Beach</li>
+      <li>🎬 Film City, Goregaon</li>
+      <li>🌇 Powai Lake</li>
+      <li>🛍️ Infinity Mall, Andheri</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://cdn.pixabay.com/photo/2018/09/22/11/02/bandra-worli-sea-link-3695006_1280.jpg" alt="Sea Link" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Mumbai Suburban</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Mumbai’s International Airport (Terminal 2) and Domestic Terminal (T1) are located in the suburban area.</p>
+      <p><strong>🚆 By Train:</strong> Local trains on Western, Central, and Harbour lines connect all major suburbs.</p>
+      <p><strong>🚌 By Road:</strong> Western and Eastern Express Highways pass through the district.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Mumbai_Suburban_district_map.svg" alt="Mumbai Suburban Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in millions)',
+            data: [10, 3, 6, 9, 12],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: November to February.</li>
+      <li>Try street food at Juhu Chowpatty.</li>
+      <li>Evenings are perfect for Marine Drive and Bandra Bandstand walks.</li>
+      <li>Keep a travel card for metro and suburban trains.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Mumbai Suburban Tourism 💛</p>
+  </footer>
+
+</body>
+</html>

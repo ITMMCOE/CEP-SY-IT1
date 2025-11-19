@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurangabad Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 50, 0.6), rgba(0, 0, 80, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/f/f5/Bibi_Ka_Maqbara%2C_Aurangabad%2C_India.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 14s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Aurangabad Tourism</h1>
+    <p>The City of Gates 🏰 — Home to Ajanta & Ellora Caves 🪔</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Aurangabad, located in the Marathwada region of Maharashtra, is a historical city known for its architectural wonders and cultural heritage. 
+      It serves as the gateway to the famous Ajanta and Ellora Caves, both UNESCO World Heritage Sites. The city is dotted with ancient forts, Mughal architecture, and natural beauty.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Bibi Ka Maqbara" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🏛️ Ajanta Caves</li>
+      <li>🏛️ Ellora Caves</li>
+      <li>🕌 Bibi Ka Maqbara</li>
+      <li>🏰 Daulatabad Fort</li>
+      <li>🌄 Grishneshwar Jyotirlinga Temple</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRProiuKLapYflNv2H6eHb32kYvW3hXMDvbhA&s" alt="Ellora Caves Aurangabad" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Aurangabad</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Aurangabad Airport connects to Mumbai, Delhi, and Hyderabad.</p>
+      <p><strong>🚆 By Train:</strong> Aurangabad Railway Station has direct trains to major Indian cities.</p>
+      <p><strong>🚌 By Road:</strong> Located on NH-52 and NH-211, easily reachable from Pune, Nashik, and Ahmednagar.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Aurangabad_in_Maharashtra_%28India%29.svg" alt="Aurangabad Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [1200, 500, 800, 1500, 1900],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: { legend: { labels: { color: 'white' } } },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: October to February.</li>
+      <li>Carry comfortable footwear for exploring caves and forts.</li>
+      <li>Try the local Naan Qalia dish and Himroo shawls.</li>
+      <li>Book Ajanta–Ellora sightseeing early morning to avoid rush.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>Aurangabad Tourism 💛</p>
+  </footer>
+
+</body>
+</html>

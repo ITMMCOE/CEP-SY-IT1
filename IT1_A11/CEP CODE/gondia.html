@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gondia Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 40, 0.6), rgba(0, 0, 80, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/e/e1/Navegaon_National_Park_Lake.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 14s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Gondia Tourism</h1>
+    <p>The Land of Lakes and Natural Beauty 🌊</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Gondia, often called the "Rice City", is surrounded by lush greenery,
+      rivers, and ancient temples. It is famous for its lakes and forests, making
+      it a perfect destination for nature lovers and explorers. The nearby
+      Navegaon National Park is a major attraction for wildlife enthusiasts.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Navegaon Lake" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🌳 Navegaon National Park</li>
+      <li>🌊 Kachargadh Caves</li>
+      <li>🕊️ Hajra Falls</li>
+      <li>🛕 Nagra Temple</li>
+      <li>🏞️ Itiadoh Dam</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8rY3LRv6Azgo50nbiBMx6maUAy8QBs1mSQg&s" alt="Kachargadh Caves" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Gondia</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Nearest airport is Dr. Babasaheb Ambedkar International Airport, Nagpur (160 km).</p>
+      <p><strong>🚆 By Train:</strong> Gondia Junction is a major railway station connecting to Mumbai, Nagpur, and Raipur.</p>
+      <p><strong>🚌 By Road:</strong> Well-connected by NH-543 and state highways to Nagpur, Bhandara, and Balaghat.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Maharashtra_Gondia_locator_map.svg" alt="Gondia Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [500, 310, 420, 780, 970],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: { legend: { labels: { color: 'white' } } },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: October to February.</li>
+      <li>Don’t miss boating at Navegaon Lake.</li>
+      <li>Carry binoculars for birdwatching at Navegaon National Park.</li>
+      <li>Try local rice-based cuisine unique to Gondia.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Gondia Tourism💛</p>
+  </footer>
+
+</body>
+</html>

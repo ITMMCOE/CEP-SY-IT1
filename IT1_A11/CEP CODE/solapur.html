@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solapur Tourism</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 50, 0.6), rgba(0, 0, 80, 0.6)),
+        url('https://upload.wikimedia.org/wikipedia/commons/2/27/Bhuikot_Fort_Solapur.jpg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.85);
+      padding: 40px 10px;
+      color: #ffcc00;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      animation: fadeDown 1.5s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { color: white; font-size: 1.2em; margin-top: 5px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 64, 128, 0.9);
+      flex-wrap: wrap;
+      animation: fadeIn 2s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffcc00;
+      color: #003366;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .back-btn:hover {
+      background-color: #ffdd33;
+      transform: scale(1.1);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      margin: 30px auto;
+      max-width: 1000px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    h2 {
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+      color: #ffdd99;
+    }
+
+    ul li { margin: 8px 0; line-height: 1.5em; }
+
+    .image-section img {
+      width: 60%;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-section img:hover { transform: scale(1.03); }
+
+    .route {
+      position: relative;
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .route-map {
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plane {
+      position: absolute;
+      top: 35%;
+      left: -80px;
+      font-size: 35px;
+      animation: fly 12s linear infinite;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffcc00;
+    }
+
+    @keyframes fly {
+      0% { left: -80px; transform: rotate(0deg) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { left: 100%; transform: rotate(0deg) scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      background-color: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 20px;
+      font-size: 0.9em;
+      margin-top: 30px;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
+
+    canvas {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      .container { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back</button>
+
+  <header>
+    <h1>Welcome to Solapur Tourism</h1>
+    <p>The Land of Heritage and Temples 🕌🏰</p>
+  </header>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#places">Places to Visit</a>
+    <a href="#routes">Routes</a>
+    <a href="#chart">Tourist Data</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <div class="container" id="overview">
+    <h2>Overview</h2>
+    <p>
+      Solapur, located in southern Maharashtra, is a historic city famous for its textiles, temples, and cultural richness. 
+      It is home to ancient monuments, religious shrines, and vibrant festivals that showcase Maharashtra’s true spirit.
+    </p>
+    <div class="image-section">
+      <img src="data:image/jpeg;base64,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" alt="Bhuikot Fort" />
+    </div>
+  </div>
+
+  <div class="container" id="places">
+    <h2>Top Attractions</h2>
+    <ul>
+      <li>🏰 Bhuikot Fort</li>
+      <li>🛕 Siddheshwar Temple</li>
+      <li>🌄 Pandharpur (famous pilgrimage site)</li>
+      <li>🕌 Solapur Jain Temple</li>
+      <li>🏞️ Hipparga Lake Garden</li>
+    </ul>
+    <div class="image-section">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Siddheshwar_Temple_Solapur.jpg" alt="Siddheshwar Temple" />
+    </div>
+  </div>
+
+  <div class="container" id="routes">
+    <h2>🛣️ How to Reach Solapur</h2>
+    <div class="route">
+      <span class="plane">✈️</span>
+      <p><strong>✈️ By Air:</strong> Solapur Airport (domestic) connects to major cities like Mumbai and Pune.</p>
+      <p><strong>🚆 By Train:</strong> Solapur Junction is a key railway hub in South Maharashtra.</p>
+      <p><strong>🚌 By Road:</strong> Solapur is connected via NH-65 and NH-52 to Pune, Hyderabad, and Aurangabad.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Maharashtra_Solapur_locator_map.svg" alt="Solapur Route Map" class="route-map" />
+    </div>
+  </div>
+
+  <div class="container" id="chart">
+    <h2>📊 Tourist Visits (Year-wise)</h2>
+    <canvas id="touristChart" width="400" height="200"></canvas>
+    <script>
+      const ctx = document.getElementById('touristChart').getContext('2d');
+      const touristChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Visitors (in thousands)',
+            data: [900, 400, 650, 950, 1200],
+            backgroundColor: 'rgba(255, 204, 0, 0.6)',
+            borderColor: '#ffcc00',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: 'white' } }
+          },
+          scales: {
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' }, beginAtZero: true }
+          }
+        }
+      });
+    </script>
+  </div>
+
+  <div class="container" id="tips">
+    <h2>💡 Travel Tips</h2>
+    <ul>
+      <li>Best time to visit: November to February.</li>
+      <li>Don’t miss the Siddheshwar Temple Fair held annually.</li>
+      <li>Try Solapur’s famous chappals and handloom textiles.</li>
+      <li>Carry water and light clothing during summers as it gets hot.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p> 2025 Solapur Tourism💛</p>
+  </footer>
+
+</body>
+</html>
